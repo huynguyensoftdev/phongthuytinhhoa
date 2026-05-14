@@ -226,7 +226,6 @@ export default function XemNgayPage() {
             {/* Bát Môn Đại Độn */}
             <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-3 mb-4 card-glow">
               <div className="flex items-center gap-2 mb-2.5">
-                <span className="text-[var(--primary)]/60 text-xs">🚪</span>
                 <span className="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">Bát Môn Đại Độn</span>
               </div>
               {(() => {

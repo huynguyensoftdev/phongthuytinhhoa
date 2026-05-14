@@ -188,9 +188,7 @@ export default function Home() {
         {/* ===== BÁT MÔN ĐẠI ĐỘN + LỤC NHÂM ===== */}
         <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] px-3 py-2.5 card-glow">
           <div className="flex items-center gap-1.5 mb-2.5">
-            <span className="text-[var(--primary)]/60 text-xs">🚪</span>
             <span className="text-xs uppercase tracking-[0.15em] text-[var(--text-muted)]">Bát Môn Đại Độn</span>
-            <span className="text-[10px] text-[var(--text-subtle)] ml-auto">{dayInfo.solarTerm ? `Tiết ${vnText(dayInfo.solarTerm)}` : ''} · {vnText(result.diaLoi.kyMon.escapeMode as string)} {result.diaLoi.kyMon.juShu as string}</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3 mb-3">
