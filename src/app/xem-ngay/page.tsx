@@ -4,13 +4,20 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { evaluateTamThuc, type TamThucResult } from '@/lib/tamthuc'
 import { getDayInfo } from '@/lib/lich'
+import { vnText, getDayElement } from '@/lib/vn'
+
+const ELEMENT_COLOR: Record<string, string> = {
+  'Mộc': 'text-emerald-600', 'Hỏa': 'text-red-600',
+  'Thổ': 'text-amber-600', 'Kim': 'text-zinc-500',
+  'Thủy': 'text-blue-600',
+}
 
 const CAN_COLORS: Record<string, string> = {
-  'Giáp': 'text-green-400', 'Ất': 'text-green-300',
-  'Bính': 'text-red-400', 'Đinh': 'text-red-300',
-  'Mậu': 'text-amber-400', 'Kỷ': 'text-amber-300',
-  'Canh': 'text-zinc-300', 'Tân': 'text-zinc-200',
-  'Nhâm': 'text-blue-400', 'Quý': 'text-blue-300',
+  'Giáp': 'text-emerald-600', 'Ất': 'text-emerald-600',
+  'Bính': 'text-red-600', 'Đinh': 'text-red-600',
+  'Mậu': 'text-amber-600', 'Kỷ': 'text-amber-600',
+  'Canh': 'text-stone-600', 'Tân': 'text-stone-600',
+  'Nhâm': 'text-blue-600', 'Quý': 'text-blue-600',
 }
 
 export default function XemNgayPage() {
@@ -124,9 +131,13 @@ export default function XemNgayPage() {
                   </div>
                 </div>
 
-                <div className="text-center py-2">
+                <div className="text-center py-2 space-y-1">
                   <p className="text-sm text-[var(--text-muted)]">
                     Ngày <span className="text-[var(--primary)] font-medium">{dayInfo.lunarDay}</span> tháng <span className="text-[var(--primary)] font-medium">{dayInfo.lunarMonth}</span> năm <span className="text-[var(--primary)] font-medium">{dayInfo.lunarYear}</span> âm lịch
+                  </p>
+                  <p className="text-xs">
+                    <span className="text-[var(--text-muted)]">Tiết {dayInfo.solarTerm ? vnText(dayInfo.solarTerm) : '—'} · Trực {vnText(dayInfo.fitness.name)} · </span>
+                    <span className={ELEMENT_COLOR[getDayElement(dayInfo.canChi.day)]}>Ngũ hành {getDayElement(dayInfo.canChi.day)}</span>
                   </p>
                 </div>
               </div>

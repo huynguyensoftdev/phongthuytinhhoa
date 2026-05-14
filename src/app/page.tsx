@@ -10,11 +10,17 @@ import {
 } from '@/lib/vn'
 
 const CAN_COLORS: Record<string, string> = {
-  '甲': 'text-green-700', '乙': 'text-green-600',
-  '丙': 'text-red-700', '丁': 'text-red-600',
-  '戊': 'text-amber-700', '己': 'text-amber-600',
-  '庚': 'text-zinc-500', '辛': 'text-zinc-400',
-  '壬': 'text-blue-700', '癸': 'text-blue-600',
+  '甲': 'text-emerald-600', '乙': 'text-emerald-600',
+  '丙': 'text-red-600', '丁': 'text-red-600',
+  '戊': 'text-amber-600', '己': 'text-amber-600',
+  '庚': 'text-stone-600', '辛': 'text-stone-600',
+  '壬': 'text-blue-600', '癸': 'text-blue-600',
+}
+
+const ELEMENT_COLOR: Record<string, string> = {
+  'Mộc': 'text-emerald-600', 'Hỏa': 'text-red-600',
+  'Thổ': 'text-amber-600', 'Kim': 'text-zinc-500',
+  'Thủy': 'text-blue-600',
 }
 
 const SCORE_GOOD = 4
@@ -100,7 +106,7 @@ export default function Home() {
             </div>
             <div className="text-center text-xs text-[var(--text-muted)]">
               {dayInfo.solarTerm && <span>Tiết {vnText(dayInfo.solarTerm)} · </span>}
-              Trực {vnText(dayInfo.fitness.name)} · Ngũ hành {getDayElement(dayInfo.canChi.day)}
+              Trực {vnText(dayInfo.fitness.name)} · <span className={ELEMENT_COLOR[getDayElement(dayInfo.canChi.day)]}>Ngũ hành {getDayElement(dayInfo.canChi.day)}</span>
             </div>
           </div>
 
@@ -262,6 +268,7 @@ export default function Home() {
               <Row label="Âm lịch" value={`${dayInfo.lunarDay}/${dayInfo.lunarMonth}`} sub={`Năm ${dayInfo.lunarYear}`} />
               <Row label="Tiết khí" value={dayInfo.solarTerm ? vnText(dayInfo.solarTerm) : '—'} />
               <Row label="Trực tinh" value={vnText(dayInfo.fitness.name)} />
+              <Row label="Ngũ hành" value={getDayElement(dayInfo.canChi.day)} />
               <Row label="Cung hoàng đạo" value={ZODIAC_VN[dayInfo.zodiac] || dayInfo.zodiac} />
             </div>
           </div>
