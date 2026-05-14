@@ -66,6 +66,11 @@ export function getDayInfo(date: Date): DayInfo {
   const mansion = getLunarMansionForDate(date)
   const flying = getFlyingStars(date)
 
+  const FLYING_STAR_NUM_TO_NAME: Record<number, string> = {
+    1: '一白', 2: '二黑', 3: '三碧', 4: '四綠', 5: '五黃',
+    6: '六白', 7: '七赤', 8: '八白', 9: '九紫',
+  }
+
   const goodHours: DayInfo['hourGood'] = []
   const badHours: DayInfo['hourBad'] = []
 
@@ -120,7 +125,12 @@ export function getDayInfo(date: Date): DayInfo {
       name: (fitness as any).starName || (almanac as any).dayFitness.fitness || '',
       auspicious: (fitness as any).isAuspicious ?? (almanac as any).dayFitness.auspicious,
     },
-    flyingStars: flying,
+    flyingStars: {
+      year: { number: flying.year, name: FLYING_STAR_NUM_TO_NAME[flying.year as number] || '' },
+      month: { number: flying.month, name: FLYING_STAR_NUM_TO_NAME[flying.month as number] || '' },
+      day: { number: flying.day, name: FLYING_STAR_NUM_TO_NAME[flying.day as number] || '' },
+      hour: { number: flying.hour, name: FLYING_STAR_NUM_TO_NAME[flying.hour as number] || '' },
+    },
     flags: Array.isArray(flags) ? flags.map(f => String(f)) : [],
     goodFor: (fitness as any).suitableFor || [],
     badFor: (fitness as any).unsuitableFor || [],

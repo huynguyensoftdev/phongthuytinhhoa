@@ -119,6 +119,48 @@ export const PALACE_VN: Record<string, string> = {
   '5': 'Trung', '6': 'Càn', '7': 'Đoài', '8': 'Cấn', '9': 'Ly',
 }
 
+// ===== THẦN SÁT =====
+export const SHEN_SAT_VN: Record<string, string> = {
+  '天德': 'Thiên Đức', '月德': 'Nguyệt Đức', '天赦': 'Thiên Xá',
+  '天喜': 'Thiên Hỷ', '紅鸞': 'Hồng Loan', '祿神': 'Lộc Thần',
+  '驛馬': 'Trạch Mã', '文昌': 'Văn Xương',
+  '三合': 'Tam Hợp', '將星': 'Tướng Tinh',
+  '亡神': 'Vong Thần', '劫煞': 'Kiếp Sát', '災煞': 'Tai Sát',
+  '歲煞': 'Tuế Sát', '羊刃': 'Dương Nhẫn', '大耗': 'Đại Hao',
+  '小耗': 'Tiểu Hao', '歲破': 'Tuế Phá',
+  '喪門': 'Tang Môn', '弔客': 'Điếu Khách', '官符': 'Quan Phù',
+  '五鬼': 'Ngũ Quỷ', '飛廉': 'Phi Liêm',
+  '龍德': 'Long Đức', '福德': 'Phúc Đức', '福星': 'Phúc Tinh',
+  '解神': 'Giải Thần', '天醫': 'Thiên Y', '地醫': 'Địa Y',
+  '生氣': 'Sinh Khí', '死氣': 'Tử Khí',
+}
+
+// ===== BÀNH TỔ KỴ =====
+export const PENGZU_VN: Record<string, string> = {
+  '甲不開倉財物耗散': 'Giáp bất khai thương, tài vật hao tán',
+  '乙不栽植千長不發': 'Ất bất tài thực, thiên trưởng bất phát',
+  '丙不修灶必見災殃': 'Bính bất tu táo, tất kiến tai ương',
+  '丁不剃頭頭必生瘡': 'Đinh bất thế đầu, đầu tất sinh sang',
+  '戊不受田田主不祥': 'Mậu bất thụ điền, điền chủ bất tường',
+  '己不破券二比並亡': 'Kỷ bất phá khoán, nhị tỷ tịnh vong',
+  '庚不經絡綸機虛張': 'Canh bất kinh lạc, luân cơ hư trương',
+  '辛不合醬主人不嘗': 'Tân bất hợp tương, chủ nhân bất thường',
+  '壬不汲水更難提防': 'Nhâm bất cấp thủy, cánh nan đề phòng',
+  '癸不詞訟理弱敵強': 'Quý bất từ tụng, lý nhược địch cường',
+  '子不問卜自惹禍殃': 'Tý bất vấn bốc, tự nhạ họa ương',
+  '丑不冠帶主不還鄉': 'Sửu bất quan đái, chủ bất hoàn hương',
+  '寅不祭祀神鬼不嘗': 'Dần bất tế tự, thần quỷ bất thường',
+  '卯不穿井水泉不香': 'Mão bất xuyên tỉnh, thủy tuyền bất hương',
+  '辰不哭泣必主重喪': 'Thìn bất khấp khấp, tất chủ trọng tang',
+  '巳不移徙路虎啣刀': 'Tỵ bất di tỉ, lộ hổ hàm đao',
+  '午不苫蓋屋主更張': 'Ngọ bất thiêm cái, ốc chủ canh trương',
+  '未不服藥毒氣入腸': 'Mùi bất phục dược, độc khí nhập tràng',
+  '申不安床鬼祟入房': 'Thân bất an sàng, quỷ túy nhập phòng',
+  '酉不宴客醉坐顛狂': 'Dậu bất yến khách, túy tọa điên cuồng',
+  '戌不吃犬作怪上床': 'Tuất bất cật khuyển, tác quái thượng sàng',
+  '亥不嫁娶必主分張': 'Hợi bất giá thú, tất chủ phân trương',
+}
+
 export function vnCanChi(text: string): string {
   const stem = text[0]
   const branch = text[1]
@@ -138,5 +180,7 @@ export function vnText(text: string): string {
     || ESCAPE_MODE_VN[text]
     || LIUREN_METHOD_VN[text]
     || ELEMENT_VN[text]
+    || SHEN_SAT_VN[text]
+    || PENGZU_VN[text]
     || text
 }

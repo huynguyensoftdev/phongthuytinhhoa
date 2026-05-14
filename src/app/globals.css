@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0f0f13;
-  --foreground: #e8e0d0;
-  --primary: #c9a84c;
-  --primary-dark: #a8882e;
+  --background: #f8f6f0;
+  --foreground: #2c2c2c;
+  --primary: #b8860b;
+  --primary-dark: #9a7209;
   --accent: #c23b22;
-  --accent-soft: #8b1a1a;
-  --card-bg: #1a1a24;
-  --card-border: #2a2a3a;
-  --good: #22c55e;
+  --card-bg: #ffffff;
+  --card-border: #e5ddd0;
+  --card-sub: #f3efe8;
+  --good: #16a34a;
   --neutral: #a3a3a3;
-  --bad: #ef4444;
+  --bad: #dc2626;
 }
 
 @theme inline {
@@ -22,6 +22,7 @@
   --color-accent: var(--accent);
   --color-card: var(--card-bg);
   --color-card-border: var(--card-border);
+  --color-card-sub: var(--card-sub);
   --color-good: var(--good);
   --color-neutral: var(--neutral);
   --color-bad: var(--bad);
@@ -44,25 +45,6 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes glow {
-  0%, 100% { box-shadow: 0 0 5px rgba(201, 168, 76, 0.3); }
-  50% { box-shadow: 0 0 20px rgba(201, 168, 76, 0.6); }
-}
-
 .animate-fadeIn {
   animation: fadeIn 0.5s ease-out forwards;
-}
-
-.animate-glow {
-  animation: glow 3s ease-in-out infinite;
-}
-
-.bg-tam-thuc {
-  background: radial-gradient(ellipse at top, #1a1a2e, #0f0f13);
-}
-
-.card-glow {
-  border: 1px solid var(--card-border);
-  background: var(--card-bg);
-  backdrop-filter: blur(4px);
 }
