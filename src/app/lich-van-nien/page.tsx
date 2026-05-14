@@ -31,39 +31,39 @@ export default function LichVanNienPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[var(--background)]">
-      <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-[var(--card-bg)]/90 backdrop-blur border-b border-[var(--card-border)]">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl">☯</span>
-          <span className="text-sm font-semibold tracking-wide text-[var(--primary)]">TINH HOA</span>
+      <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-[var(--card-bg)]/90 backdrop-blur-lg border-b border-[var(--card-border)]">
+        <Link href="/" className="flex items-center gap-2.5">
+          <span className="text-base opacity-80">☯</span>
+          <span className="text-[11px] font-semibold tracking-[0.3em] text-[var(--primary)]/80">TINH HOA</span>
         </Link>
-        <Link href="/xem-ngay" className="text-xs text-zinc-500 hover:text-[var(--primary)] transition-colors">Xem ngày</Link>
+        <Link href="/xem-ngay" className="text-xs text-[var(--text-muted)] hover:text-[var(--primary)] transition-colors duration-300">Xem ngày</Link>
       </header>
 
       <main className="flex-1 px-4 py-6 max-w-lg mx-auto w-full">
         {/* Month selector */}
-        <div className="flex items-center justify-between mb-4 rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] px-3 py-3">
+        <div className="flex items-center justify-between mb-4 rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] px-3 py-3 card-glow">
           <button onClick={() => nav(-1)}
-            className="w-9 h-9 rounded-lg bg-[var(--card-sub)] border border-[var(--card-border)] text-zinc-500 flex items-center justify-center hover:border-[var(--primary-dark)]/50 transition-colors active:scale-90 text-sm">
+            className="w-9 h-9 rounded-lg bg-[var(--card-sub)] border border-[var(--card-border)] text-[var(--text-muted)] flex items-center justify-center hover:border-[var(--primary)]/30 hover:text-[var(--primary)] transition-all duration-200 active:scale-90 text-sm">
             ←
           </button>
           <div className="text-center">
             <div className="text-sm font-semibold text-[var(--foreground)]">{monthNames[month - 1]} {year}</div>
             <button onClick={() => { setYear(today.getFullYear()); setMonth(today.getMonth() + 1) }}
-              className="text-[10px] text-[var(--primary)] hover:text-[var(--primary-dark)] transition-colors mt-0.5">
+              className="text-[10px] text-[var(--primary)]/70 hover:text-[var(--primary)] transition-colors duration-300 mt-0.5">
               Hôm nay
             </button>
           </div>
           <button onClick={() => nav(1)}
-            className="w-9 h-9 rounded-lg bg-[var(--card-sub)] border border-[var(--card-border)] text-zinc-500 flex items-center justify-center hover:border-[var(--primary-dark)]/50 transition-colors active:scale-90 text-sm">
+            className="w-9 h-9 rounded-lg bg-[var(--card-sub)] border border-[var(--card-border)] text-[var(--text-muted)] flex items-center justify-center hover:border-[var(--primary)]/30 hover:text-[var(--primary)] transition-all duration-200 active:scale-90 text-sm">
             →
           </button>
         </div>
 
         {/* Calendar grid */}
-        <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] overflow-hidden">
+        <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] overflow-hidden card-glow">
           <div className="grid grid-cols-7 border-b border-[var(--card-border)]">
             {['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'].map(d => (
-              <div key={d} className="text-center text-[10px] text-zinc-500 py-2 uppercase tracking-wider">{d}</div>
+              <div key={d} className="text-center text-[10px] text-[var(--text-muted)] py-2 uppercase tracking-wider">{d}</div>
             ))}
           </div>
           <div className="grid grid-cols-7">
@@ -74,7 +74,7 @@ export default function LichVanNienPage() {
               return (
                 <div key={i} className={`py-2 text-center relative ${isToday ? 'bg-[var(--primary)]/10' : ''}`}>
                   <div className="text-xs text-[var(--foreground)] font-medium">{d.lunarDay}</div>
-                  <div className={`text-[9px] ${isGood ? 'text-good/70' : 'text-zinc-500'}`}>{d.canChi.day}</div>
+                  <div className={`text-[9px] ${isGood ? 'text-[var(--good)]/70' : 'text-[var(--text-muted)]'}`}>{d.canChi.day}</div>
                   {isToday && (
                     <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[var(--primary)]" />
                   )}
@@ -85,9 +85,9 @@ export default function LichVanNienPage() {
         </div>
 
         {/* Chú thích */}
-        <div className="flex gap-4 justify-center mt-3 text-[10px] text-zinc-500">
+        <div className="flex gap-4 justify-center mt-3 text-[10px] text-[var(--text-muted)]">
           <div className="flex items-center gap-1.5">
-            <div className="w-2.5 h-2.5 rounded-sm bg-good/20 border border-good/30" />
+            <div className="w-2.5 h-2.5 rounded-sm bg-[var(--good)]/20 border border-[var(--good)]/30" />
             Ngày tốt
           </div>
           <div className="flex items-center gap-1.5">
