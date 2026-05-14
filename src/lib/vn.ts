@@ -173,6 +173,8 @@ export const SHEN_SAT_VN: Record<string, string> = {
   '龍德': 'Long Đức', '福德': 'Phúc Đức', '福星': 'Phúc Tinh',
   '解神': 'Giải Thần', '天醫': 'Thiên Y', '地醫': 'Địa Y',
   '生氣': 'Sinh Khí', '死氣': 'Tử Khí',
+  '天乙貴人': 'Thiên Ất Quý Nhân', '太極貴人': 'Thái Cực Quý Nhân',
+  '文昌貴人': 'Văn Xương Quý Nhân', '學堂': 'Học Đường', '十靈日': 'Thập Linh Nhật',
 }
 
 // ===== BÀNH TỔ KỴ =====
