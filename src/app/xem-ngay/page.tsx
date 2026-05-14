@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { evaluateTamThuc, type TamThucResult } from '@/lib/tamthuc'
 import { getDayInfo } from '@/lib/lich'
-import { vnText, getDayElement, DOOR_VN, PALACE_VN, PALACE_DOOR_HOME, computeBatMonDaiDon } from '@/lib/vn'
+import { vnText, vnCanChi, getDayElement, DOOR_VN, PALACE_VN, PALACE_DOOR_HOME, computeBatMonDaiDon } from '@/lib/vn'
 import { ThemeSwitcher } from '@/components/ThemeProvider'
 import { SunMoon, Clock, ClipboardList } from 'lucide-react'
 
@@ -15,11 +15,11 @@ const ELEMENT_COLOR: Record<string, string> = {
 }
 
 const CAN_COLORS: Record<string, string> = {
-  'Giáp': 'text-emerald-600', 'Ất': 'text-emerald-600',
-  'Bính': 'text-red-600', 'Đinh': 'text-red-600',
-  'Mậu': 'text-amber-600', 'Kỷ': 'text-amber-600',
-  'Canh': 'text-stone-600', 'Tân': 'text-stone-600',
-  'Nhâm': 'text-blue-600', 'Quý': 'text-blue-600',
+  '甲': 'text-emerald-600', '乙': 'text-emerald-600',
+  '丙': 'text-red-600', '丁': 'text-red-600',
+  '戊': 'text-amber-600', '己': 'text-amber-600',
+  '庚': 'text-stone-600', '辛': 'text-stone-600',
+  '壬': 'text-blue-600', '癸': 'text-blue-600',
 }
 
 export default function XemNgayPage() {
@@ -113,25 +113,25 @@ export default function XemNgayPage() {
                   <div>
                     <div className="text-[10px] text-[var(--text-muted)] uppercase tracking-wider mb-1">Năm</div>
                     <div className={`text-lg font-bold tracking-wider ${CAN_COLORS[dayInfo.canChi.year[0]] || 'text-[var(--foreground)]'}`}>
-                      {dayInfo.canChi.year}
+                      {vnCanChi(dayInfo.canChi.year)}
                     </div>
                   </div>
                   <div>
                     <div className="text-[10px] text-[var(--text-muted)] uppercase tracking-wider mb-1">Tháng</div>
                     <div className={`text-lg font-bold tracking-wider ${CAN_COLORS[dayInfo.canChi.month[0]] || 'text-[var(--foreground)]'}`}>
-                      {dayInfo.canChi.month}
+                      {vnCanChi(dayInfo.canChi.month)}
                     </div>
                   </div>
                   <div>
                     <div className="text-[10px] text-[var(--text-muted)] uppercase tracking-wider mb-1">Ngày</div>
                     <div className={`text-lg font-bold tracking-wider ${CAN_COLORS[dayInfo.canChi.day[0]] || 'text-[var(--foreground)]'}`}>
-                      {dayInfo.canChi.day}
+                      {vnCanChi(dayInfo.canChi.day)}
                     </div>
                   </div>
                   <div>
                     <div className="text-[10px] text-[var(--text-muted)] uppercase tracking-wider mb-1">Giờ</div>
                     <div className={`text-lg font-bold tracking-wider ${CAN_COLORS[dayInfo.canChi.hour[0]] || 'text-[var(--foreground)]'}`}>
-                      {dayInfo.canChi.hour}
+                      {vnCanChi(dayInfo.canChi.hour)}
                     </div>
                   </div>
                 </div>

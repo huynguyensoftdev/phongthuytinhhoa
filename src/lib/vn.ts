@@ -88,9 +88,10 @@ export const ESCAPE_MODE_VN: Record<string, string> = {
 
 // ===== LỤC NHÂM PHÉP =====
 export const LIUREN_METHOD_VN: Record<string, string> = {
-  '比用': 'Tỷ dụng', '涉害': 'Xạ hại', '遙克': 'Dao khắc',
+  '比用': 'Tỷ dụng', '涉害': 'Xạ hại', '遙剋': 'Dao khắc',
   '昴星': 'Mão tinh', '別責': 'Biệt trách', '八專': 'Bát chuyên',
   '伏吟': 'Phục ngâm', '返吟': 'Phản ngâm',
+  '賊剋': 'Tặc khắc',
 }
 
 // ===== NGŨ HÀNH THEO THIÊN CAN =====
@@ -175,6 +176,12 @@ export const SHEN_SAT_VN: Record<string, string> = {
   '生氣': 'Sinh Khí', '死氣': 'Tử Khí',
   '天乙貴人': 'Thiên Ất Quý Nhân', '太極貴人': 'Thái Cực Quý Nhân',
   '文昌貴人': 'Văn Xương Quý Nhân', '學堂': 'Học Đường', '十靈日': 'Thập Linh Nhật',
+  '金輿': 'Kim Dư', '桃花': 'Đào Hoa', '華蓋': 'Hoa Cái',
+  '孤辰': 'Cô Thần', '寡宿': 'Quả Túc', '魁罡': 'Khôi Cương',
+  '十惡大敗': 'Thập Ác Đại Bại', '陰差陽錯': 'Âm Sai Dương Thác',
+  '月破': 'Nguyệt Phá', '天赦日': 'Thiên Xá Nhật', '金神': 'Kim Thần',
+  '天羅': 'Thiên La', '地網': 'Địa Võng', '四廢': 'Tứ Phế',
+  '三奇貴人': 'Tam Kỳ Quý Nhân',
 }
 
 // ===== BÀNH TỔ KỴ =====

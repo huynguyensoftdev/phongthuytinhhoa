@@ -53,8 +53,9 @@ const GENERAL_SCORE: Record<string, number> = {
 }
 
 const LIUREN_METHOD_SCORE: Record<string, number> = {
-  '比用': 2, '涉害': 0, '遙克': 1, '昴星': -1,
+  '比用': 2, '涉害': 0, '遙剋': 1, '昴星': -1,
   '別責': 0, '八專': -1, '伏吟': -1, '返吟': -1,
+  '賊剋': 0,
 }
 
 function xepLoai(diem: number): string {
@@ -232,7 +233,7 @@ export function evaluateTamThuc(date: Date): TamThucResult {
     for (const [branch, gen] of Object.entries(generals)) {
       if (nobles.includes(gen)) {
         hasNoble = true
-        nhanHoaNx.push(`Quý nhân ${vnText(gen)} tại ${vnText(branch)} — được người giúp đỡ`)
+        nhanHoaNx.push(`Quý nhân ${vnText(gen)} tại ${BRANCH_VN[branch] || branch} — được người giúp đỡ`)
         break
       }
     }
