@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { evaluateTamThuc, type TamThucResult } from '@/lib/tamthuc'
 import { getDayInfo } from '@/lib/lich'
 import { vnText, getDayElement, DOOR_VN, PALACE_VN, PALACE_DOOR_HOME, computeBatMonDaiDon } from '@/lib/vn'
+import { ThemeSwitcher } from '@/components/ThemeProvider'
 
 const ELEMENT_COLOR: Record<string, string> = {
   'Mộc': 'text-emerald-600', 'Hỏa': 'text-red-600',
@@ -51,7 +52,10 @@ export default function XemNgayPage() {
           <span className="text-base opacity-80">☯</span>
           <span className="text-[11px] font-semibold tracking-[0.3em] text-[var(--primary)]/80">TINH HOA</span>
         </Link>
-        <Link href="/lich-van-nien" className="text-xs text-[var(--text-muted)] hover:text-[var(--primary)] transition-colors duration-300">Lịch</Link>
+        <div className="flex items-center gap-2">
+          <ThemeSwitcher />
+          <Link href="/lich-van-nien" className="text-xs text-[var(--text-muted)] hover:text-[var(--primary)] transition-colors duration-300">Lịch</Link>
+        </div>
       </header>
 
       <main className="flex-1 px-4 py-6 max-w-lg mx-auto w-full">

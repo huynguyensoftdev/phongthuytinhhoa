@@ -9,6 +9,7 @@ import {
   ANIMAL_VN, ZODIAC_VN, LIUREN_METHOD_VN, getDayElement,
   computeBatMonDaiDon, PALACE_DOOR_HOME,
 } from '@/lib/vn'
+import { ThemeSwitcher } from '@/components/ThemeProvider'
 
 const CAN_COLORS: Record<string, string> = {
   '甲': 'text-emerald-600', '乙': 'text-emerald-600',
@@ -74,9 +75,12 @@ export default function Home() {
             <span className="text-base opacity-80">☯</span>
             <span className="text-[11px] font-semibold tracking-[0.3em] text-[var(--primary)]/80">TINH HOA</span>
           </div>
-          <button onClick={goToday} className="text-xs px-3 py-1.5 rounded-lg border border-[var(--card-border)] text-[var(--primary)]/70 hover:text-[var(--primary)] hover:border-[var(--primary)]/30 transition-all duration-300">
-            Hôm nay
-          </button>
+          <div className="flex items-center gap-2">
+            <ThemeSwitcher />
+            <button onClick={goToday} className="text-xs px-3 py-1.5 rounded-lg border border-[var(--card-border)] text-[var(--primary)]/70 hover:text-[var(--primary)] hover:border-[var(--primary)]/30 transition-all duration-300">
+              Hôm nay
+            </button>
+          </div>
         </div>
       </header>
 
