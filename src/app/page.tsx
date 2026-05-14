@@ -77,6 +77,7 @@ export default function Home() {
           <div className="flex-1 flex flex-col items-center py-2 rounded-xl bg-zinc-900 border border-zinc-800">
             <span className="text-base font-bold text-foreground">{pd < 10 ? '0'+pd : pd}/{pm < 10 ? '0'+pm : pm}/{py}</span>
             <span className="text-xs text-zinc-500">{dow}{isToday ? ' · Hôm nay' : ''}</span>
+            <span className="text-[10px] text-zinc-600 mt-0.5">{dayInfo.lunarDay}/{dayInfo.lunarMonth}/{dayInfo.lunarYear} âm lịch</span>
           </div>
           <button onClick={() => goDay(1)} className="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 hover:border-amber-700/50 active:scale-90 text-lg">›</button>
         </div>
@@ -98,8 +99,7 @@ export default function Home() {
               ))}
             </div>
             <div className="text-center">
-              <span className="text-sm text-zinc-400">{dayInfo.lunarDay}/{dayInfo.lunarMonth}/{dayInfo.lunarYear} âm lịch</span>
-              {dayInfo.solarTerm && <span className="text-xs text-zinc-600 ml-2">· {vnText(dayInfo.solarTerm)}</span>}
+              {dayInfo.solarTerm && <span className="text-xs text-zinc-600">Tiết {vnText(dayInfo.solarTerm)}</span>}
             </div>
           </div>
 
