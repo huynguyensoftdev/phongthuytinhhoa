@@ -150,20 +150,23 @@ export default function Home() {
             <span className="text-amber-500/50 text-[9px]">📋</span>
             <span className="text-[7px] uppercase tracking-[0.2em] text-zinc-600">Nhận xét Tam Thức</span>
           </div>
-          <div className="grid grid-cols-3 gap-1.5">
+          <div className="space-y-1.5">
             {([
-              { key: 'thienThoi' as const, label: 'Thiên', icon: '🌤', color: result.thienThoi.diem >= 2 ? 'text-good' : result.thienThoi.diem >= 0 ? 'text-zinc-400' : 'text-bad', nx: result.thienThoi.nhanXet },
-              { key: 'diaLoi' as const, label: 'Địa', icon: '🌍', color: result.diaLoi.diem >= 2 ? 'text-good' : result.diaLoi.diem >= 0 ? 'text-zinc-400' : 'text-bad', nx: result.diaLoi.nhanXet },
-              { key: 'nhanHoa' as const, label: 'Nhân', icon: '👥', color: result.nhanHoa.diem >= 2 ? 'text-good' : result.nhanHoa.diem >= 0 ? 'text-zinc-400' : 'text-bad', nx: result.nhanHoa.nhanXet },
+              { key: 'thienThoi' as const, label: 'Thiên thời', icon: '🌤', color: result.thienThoi.diem >= 2 ? 'text-good' : result.thienThoi.diem >= 0 ? 'text-zinc-400' : 'text-bad', nx: result.thienThoi.nhanXet },
+              { key: 'diaLoi' as const, label: 'Địa lợi', icon: '🌍', color: result.diaLoi.diem >= 2 ? 'text-good' : result.diaLoi.diem >= 0 ? 'text-zinc-400' : 'text-bad', nx: result.diaLoi.nhanXet },
+              { key: 'nhanHoa' as const, label: 'Nhân hòa', icon: '👥', color: result.nhanHoa.diem >= 2 ? 'text-good' : result.nhanHoa.diem >= 0 ? 'text-zinc-400' : 'text-bad', nx: result.nhanHoa.nhanXet },
             ]).map(col => (
-              <div key={col.key} className="rounded-lg bg-black/40 px-2 py-1.5">
-                <div className="flex items-center gap-1 mb-1">
-                  <span className="text-[9px]">{col.icon}</span>
-                  <span className={`text-[8px] font-bold uppercase ${col.color}`}>{col.label}</span>
+              <div key={col.key} className="flex items-start gap-2 rounded-lg bg-black/40 px-2.5 py-1.5">
+                <span className="text-[11px] shrink-0 mt-0.5">{col.icon}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className={`text-[9px] font-bold uppercase ${col.color}`}>{col.label}</span>
+                    <span className={`text-[10px] font-bold ${col.color}`}>({col.key === 'thienThoi' ? result.thienThoi.diem : col.key === 'diaLoi' ? result.diaLoi.diem : result.nhanHoa.diem})</span>
+                  </div>
+                  {col.nx.map((n, i) => (
+                    <p key={i} className="text-[8px] text-zinc-500 leading-relaxed">{n}</p>
+                  ))}
                 </div>
-                {col.nx.map((n, i) => (
-                  <p key={i} className="text-[8px] text-zinc-500 leading-relaxed mb-0.5">{n}</p>
-                ))}
               </div>
             ))}
           </div>
@@ -179,21 +182,24 @@ export default function Home() {
 
           <div className="grid grid-cols-2 gap-2 mb-2">
             <div>
-              <div className="text-[7px] text-zinc-600 uppercase tracking-wider mb-1">Bát môn</div>
-              <div className="grid grid-cols-4 gap-0.5">
-                {result.diaLoi.kyMon.doors && Object.entries(result.diaLoi.kyMon.doors as Record<string, string>)
-                  .sort(([a], [b]) => Number(a) - Number(b))
-                  .map(([palace, door]) => {
-                    const dVn = DOOR_VN[door] || door
-                    const isDoorGood = door === '休' || door === '生' || door === '開'
-                    const isDoorBad = door === '杜' || door === '傷' || door === '死' || door === '驚'
-                    return (
-                      <div key={palace} className={`text-center py-1 rounded ${isDoorGood ? 'bg-good/8' : isDoorBad ? 'bg-bad/8' : 'bg-zinc-800/50'}`}>
-                        <div className={`text-xs font-bold ${isDoorGood ? 'text-good' : isDoorBad ? 'text-bad' : 'text-zinc-400'}`}>{dVn}</div>
-                        <div className="text-[6px] text-zinc-700">{PALACE_VN[palace] || palace}</div>
+              <div className="text-[7px] text-zinc-600 uppercase tracking-wider mb-1">Bát môn — Cửu cung</div>
+              <div className="grid grid-cols-3 gap-0.5 max-w-[180px]">
+                {[4, 9, 2, 3, 5, 7, 8, 1, 6].map(palace => {
+                  const doors = result.diaLoi.kyMon.doors as Record<string, string> | undefined
+                  const door = doors?.[String(palace)] || ''
+                  const dVn = DOOR_VN[door] || door
+                  const isDoorGood = door === '休' || door === '生' || door === '開'
+                  const isDoorBad = door === '杜' || door === '傷' || door === '死' || door === '驚'
+                  const isEmpty = !door
+                  return (
+                    <div key={palace} className={`text-center py-1.5 rounded ${isEmpty ? 'bg-black/20' : isDoorGood ? 'bg-good/8' : isDoorBad ? 'bg-bad/8' : 'bg-zinc-800/50'}`}>
+                      <div className={`text-xs font-bold ${isEmpty ? 'text-zinc-700' : isDoorGood ? 'text-good' : isDoorBad ? 'text-bad' : 'text-zinc-400'}`}>
+                        {isEmpty ? '—' : dVn}
                       </div>
-                    )
-                  })}
+                      <div className="text-[6px] text-zinc-700">{PALACE_VN[String(palace)] || palace}</div>
+                    </div>
+                  )
+                })}
               </div>
             </div>
             <div>
