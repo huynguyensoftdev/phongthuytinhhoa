@@ -1,23 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --background: #08080e;
-  --foreground: #e8e0d0;
-  --primary: #c9a84c;
-  --primary-dark: #a8882e;
-  --primary-glow: rgba(201, 168, 76, 0.15);
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+  --primary: #c4a02e;
+  --primary-dark: #a08020;
+  --primary-glow: rgba(196, 160, 46, 0.08);
   --accent: #c23b22;
-  --card-bg: #12121f;
-  --card-border: rgba(201, 168, 76, 0.12);
-  --card-sub: #1a1a2e;
-  --card-hover: #20203a;
-  --good: #22c55e;
-  --good-bg: rgba(34, 197, 94, 0.08);
-  --neutral: #6b7280;
-  --bad: #ef4444;
-  --bad-bg: rgba(239, 68, 68, 0.08);
-  --text-muted: #b0a090;
-  --text-subtle: #7a7060;
+  --card-bg: #ffffff;
+  --card-border: #e0d5c0;
+  --card-sub: #f8f5f0;
+  --good: #2e7d32;
+  --good-bg: rgba(46, 125, 50, 0.07);
+  --neutral: #9e9e9e;
+  --bad: #c62828;
+  --bad-bg: rgba(198, 40, 40, 0.07);
+  --text-muted: #6b6560;
+  --text-subtle: #a09890;
 }
 
 @theme inline {
@@ -42,10 +41,6 @@
 
 body {
   background: var(--background);
-  background-image:
-    radial-gradient(ellipse 600px 400px at 50% -20%, rgba(201, 168, 76, 0.03) 0%, transparent 70%),
-    radial-gradient(ellipse 400px 300px at 80% 50%, rgba(201, 168, 76, 0.02) 0%, transparent 70%),
-    radial-gradient(ellipse 300px 500px at 20% 80%, rgba(201, 168, 76, 0.015) 0%, transparent 70%);
   color: var(--foreground);
   font-family: var(--font-sans), 'Noto Sans', sans-serif;
 }
@@ -56,8 +51,8 @@ body {
 }
 
 @keyframes glow {
-  0%, 100% { box-shadow: 0 0 8px rgba(201, 168, 76, 0.2), 0 0 20px rgba(201, 168, 76, 0.05); }
-  50% { box-shadow: 0 0 15px rgba(201, 168, 76, 0.3), 0 0 35px rgba(201, 168, 76, 0.08); }
+  0%, 100% { box-shadow: 0 0 6px rgba(196, 160, 46, 0.15), 0 0 15px rgba(196, 160, 46, 0.05); }
+  50% { box-shadow: 0 0 12px rgba(196, 160, 46, 0.25), 0 0 25px rgba(196, 160, 46, 0.08); }
 }
 
 .animate-fadeIn {
@@ -71,21 +66,21 @@ body {
 .card-glow {
   border: 1px solid var(--card-border);
   background: var(--card-bg);
-  backdrop-filter: blur(8px);
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .card-glow:hover {
-  border-color: rgba(201, 168, 76, 0.25);
+  border-color: rgba(196, 160, 46, 0.3);
+  box-shadow: 0 2px 16px rgba(196, 160, 46, 0.06);
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(201, 168, 76, 0.2); border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: rgba(196, 160, 46, 0.2); border-radius: 4px; }
 
 /* Gold divider */
 .divider-gold {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.25), transparent);
+  background: linear-gradient(90deg, transparent, rgba(196, 160, 46, 0.2), transparent);
 }

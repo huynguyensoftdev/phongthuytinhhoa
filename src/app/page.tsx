@@ -10,11 +10,11 @@ import {
 } from '@/lib/vn'
 
 const CAN_COLORS: Record<string, string> = {
-  '甲': 'text-green-400', '乙': 'text-green-300',
-  '丙': 'text-red-400', '丁': 'text-red-300',
-  '戊': 'text-amber-400', '己': 'text-amber-300',
-  '庚': 'text-zinc-300', '辛': 'text-zinc-200',
-  '壬': 'text-blue-400', '癸': 'text-blue-300',
+  '甲': 'text-green-700', '乙': 'text-green-600',
+  '丙': 'text-red-700', '丁': 'text-red-600',
+  '戊': 'text-amber-700', '己': 'text-amber-600',
+  '庚': 'text-zinc-500', '辛': 'text-zinc-400',
+  '壬': 'text-blue-700', '癸': 'text-blue-600',
 }
 
 const SCORE_GOOD = 4
