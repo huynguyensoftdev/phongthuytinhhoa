@@ -93,6 +93,20 @@ export const LIUREN_METHOD_VN: Record<string, string> = {
   '伏吟': 'Phục ngâm', '返吟': 'Phản ngâm',
 }
 
+// ===== NGŨ HÀNH THEO THIÊN CAN =====
+export const STEM_ELEMENT: Record<string, string> = {
+  '甲': 'Mộc', '乙': 'Mộc',
+  '丙': 'Hỏa', '丁': 'Hỏa',
+  '戊': 'Thổ', '己': 'Thổ',
+  '庚': 'Kim', '辛': 'Kim',
+  '壬': 'Thủy', '癸': 'Thủy',
+}
+
+export function getDayElement(canChiDay: string): string {
+  const stem = canChiDay[0]
+  return STEM_ELEMENT[stem] || ''
+}
+
 // ===== NGŨ HÀNH =====
 export const ELEMENT_VN: Record<string, string> = {
   'Wood': 'Mộc', 'Fire': 'Hỏa', 'Earth': 'Thổ',

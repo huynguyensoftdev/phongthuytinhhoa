@@ -6,7 +6,7 @@ import { getDayInfo, getMonthDays } from '@/lib/lich'
 import {
   STEM_VN, BRANCH_VN, vnCanChi, vnText, GENERAL_VN,
   DOOR_VN, FLYING_STAR_VN, PALACE_VN,
-  ANIMAL_VN, ZODIAC_VN, LIUREN_METHOD_VN,
+  ANIMAL_VN, ZODIAC_VN, LIUREN_METHOD_VN, getDayElement,
 } from '@/lib/vn'
 
 const CAN_COLORS: Record<string, string> = {
@@ -98,8 +98,9 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <div className="text-center">
-              {dayInfo.solarTerm && <span className="text-xs text-zinc-600">Tiết {vnText(dayInfo.solarTerm)}</span>}
+            <div className="text-center text-xs text-zinc-600">
+              {dayInfo.solarTerm && <span>Tiết {vnText(dayInfo.solarTerm)} · </span>}
+              Trực {vnText(dayInfo.fitness.name)} · Ngũ hành {getDayElement(dayInfo.canChi.day)}
             </div>
           </div>
 
