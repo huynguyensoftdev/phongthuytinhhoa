@@ -34,7 +34,7 @@ export default function LichVanNienPage() {
       <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-[var(--card-bg)]/90 backdrop-blur-lg border-b border-[var(--card-border)]">
         <Link href="/" className="flex items-center gap-2.5">
           <span className="text-base opacity-80">☯</span>
-          <span className="text-[11px] font-semibold tracking-[0.3em] text-[var(--primary)]/80">TINH HOA</span>
+          <span className="text-[11px] font-semibold tracking-[0.3em] text-[var(--primary)]/80">Lịch Phong thuỷ</span>
         </Link>
         <Link href="/xem-ngay" className="text-xs text-[var(--text-muted)] hover:text-[var(--primary)] transition-colors duration-300">Xem ngày</Link>
       </header>

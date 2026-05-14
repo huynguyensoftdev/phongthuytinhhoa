@@ -73,7 +73,7 @@ export default function Home() {
         <div className="max-w-md mx-auto flex items-center justify-between px-3 py-3">
           <div className="flex items-center gap-2.5">
             <span className="text-base opacity-80">☯</span>
-            <span className="text-[11px] font-semibold tracking-[0.3em] text-[var(--primary)]/80">TINH HOA</span>
+            <span className="text-[11px] font-semibold tracking-[0.3em] text-[var(--primary)]/80">Lịch Phong thuỷ</span>
           </div>
           <div className="flex items-center gap-2">
             <ThemeSwitcher />

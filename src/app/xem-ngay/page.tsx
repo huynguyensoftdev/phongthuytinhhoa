@@ -50,7 +50,7 @@ export default function XemNgayPage() {
       <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-[var(--card-bg)]/90 backdrop-blur-lg border-b border-[var(--card-border)]">
         <Link href="/" className="flex items-center gap-2.5">
           <span className="text-base opacity-80">☯</span>
-          <span className="text-[11px] font-semibold tracking-[0.3em] text-[var(--primary)]/80">TINH HOA</span>
+          <span className="text-[11px] font-semibold tracking-[0.3em] text-[var(--primary)]/80">Lịch Phong thuỷ</span>
         </Link>
         <div className="flex items-center gap-2">
           <ThemeSwitcher />
