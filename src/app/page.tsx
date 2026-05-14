@@ -1,65 +1,81 @@
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="flex flex-col flex-1 min-h-screen">
+      {/* Header */}
+      <header className="flex items-center justify-between px-6 py-4 border-b border-white/5">
+        <Link href="/" className="flex items-center gap-2">
+          <span className="text-2xl">☯</span>
+          <span className="text-lg font-semibold text-primary">Tinh Hoa Phong Thủy</span>
+        </Link>
+        <nav className="flex gap-6 text-sm text-zinc-400">
+          <Link href="/xem-ngay" className="hover:text-primary transition-colors">Xem ngày tốt</Link>
+          <Link href="/lich-van-nien" className="hover:text-primary transition-colors">Lịch vạn niên</Link>
+        </nav>
+      </header>
+
+      {/* Hero */}
+      <section className="flex flex-col items-center justify-center flex-1 px-6 py-24 text-center">
+        <div className="max-w-2xl animate-fadeIn">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+            <span className="text-primary">Tam Thức</span>
+            <br />
+            <span className="text-foreground">Xem Ngày Tốt</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-lg text-zinc-400 mb-8 leading-relaxed">
+            Ứng dụng <strong className="text-foreground">Kỳ Môn Độn Giáp</strong> •{' '}
+            <strong className="text-foreground">Lục Nhâm Thần Khóa</strong> •{' '}
+            <strong className="text-foreground">Thái Ất Thần Kinh</strong>
+            <br />
+            để chọn ngày lành tháng tốt theo triết lý
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <div className="flex gap-6 justify-center mb-12 text-sm">
+            <div className="flex flex-col items-center px-6 py-3 rounded-lg card-glow">
+              <span className="text-3xl mb-1">🌤</span>
+              <span className="text-primary font-medium">Thiên thời</span>
+            </div>
+            <div className="flex flex-col items-center px-6 py-3 rounded-lg card-glow">
+              <span className="text-3xl mb-1">🌍</span>
+              <span className="text-primary font-medium">Địa lợi</span>
+            </div>
+            <div className="flex flex-col items-center px-6 py-3 rounded-lg card-glow">
+              <span className="text-3xl mb-1">👥</span>
+              <span className="text-primary font-medium">Nhân hòa</span>
+            </div>
+          </div>
+          <Link
+            href="/xem-ngay"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-primary text-black font-semibold text-lg hover:bg-primary-dark transition-all animate-glow"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            Xem ngay
+            <span>→</span>
+          </Link>
         </div>
-      </main>
+      </section>
+
+      {/* Features */}
+      <section className="px-6 py-16 border-t border-white/5">
+        <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-6">
+          <div className="p-6 rounded-lg card-glow">
+            <h3 className="text-primary font-semibold mb-2">Lịch Vạn Niên</h3>
+            <p className="text-sm text-zinc-400">Chuyển đổi âm dương lịch, Can Chi, Ngũ hành, 12 Sao, 28 Tú chính xác.</p>
+          </div>
+          <div className="p-6 rounded-lg card-glow">
+            <h3 className="text-primary font-semibold mb-2">Xem Ngày Tốt</h3>
+            <p className="text-sm text-zinc-400">Phân tích ngày theo Tam Thức, tổng hợp điểm Thiên thời - Địa lợi - Nhân hòa.</p>
+          </div>
+          <div className="p-6 rounded-lg card-glow">
+            <h3 className="text-primary font-semibold mb-2">Giờ Hoàng Đạo</h3>
+            <p className="text-sm text-zinc-400">Tra cứu giờ tốt xấu, hướng xuất hành, giờ Lý Thuần Phong mỗi ngày.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="px-6 py-6 text-center text-xs text-zinc-600 border-t border-white/5">
+        Tinh Hoa Phong Thủy — Ứng dụng tri thức cổ học cho người Việt
+      </footer>
     </div>
   );
 }

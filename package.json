@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@4n6h4x0r/stem-branch": "^0.2.0",
+    "@min98/vnlunar": "^1.0.3",
     "next": "16.2.6",
     "react": "19.2.4",
     "react-dom": "19.2.4"
