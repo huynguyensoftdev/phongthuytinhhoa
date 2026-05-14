@@ -35,7 +35,7 @@ export interface DayInfo {
     day: any
     hour: any
   }
-  flags: string[]
+  flags: any[]
   goodFor: string[]
   badFor: string[]
   hourGood: { hour: string; time: string; name: string }[]
@@ -131,7 +131,7 @@ export function getDayInfo(date: Date): DayInfo {
       day: { number: flying.day, name: FLYING_STAR_NUM_TO_NAME[flying.day as number] || '' },
       hour: { number: flying.hour, name: FLYING_STAR_NUM_TO_NAME[flying.hour as number] || '' },
     },
-    flags: Array.isArray(flags) ? flags.map(f => String(f)) : [],
+    flags: Array.isArray(flags) ? flags : [],
     goodFor: (fitness as any).suitableFor || [],
     badFor: (fitness as any).unsuitableFor || [],
     hourGood: goodHours,
