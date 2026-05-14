@@ -1,16 +1,24 @@
 'use client'
 
-import { useState, useMemo, useCallback } from 'react'
+import { useState, useMemo } from 'react'
 import { evaluateTamThuc } from '@/lib/tamthuc'
 import { getDayInfo, getMonthDays } from '@/lib/lich'
+import {
+  STEM_VN, BRANCH_VN, vnCanChi, vnText, GENERAL_VN,
+  DOOR_VN, FLYING_STAR_VN, PALACE_VN,
+  ANIMAL_VN, ZODIAC_VN, LIUREN_METHOD_VN,
+} from '@/lib/vn'
 
 const CAN_COLORS: Record<string, string> = {
-  'Giáp': 'text-green-400', 'Ất': 'text-green-300',
-  'Bính': 'text-red-400', 'Đinh': 'text-red-300',
-  'Mậu': 'text-amber-400', 'Kỷ': 'text-amber-300',
-  'Canh': 'text-zinc-300', 'Tân': 'text-zinc-200',
-  'Nhâm': 'text-blue-400', 'Quý': 'text-blue-300',
+  '甲': 'text-green-400', '乙': 'text-green-300',
+  '丙': 'text-red-400', '丁': 'text-red-300',
+  '戊': 'text-amber-400', '己': 'text-amber-300',
+  '庚': 'text-zinc-300', '辛': 'text-zinc-200',
+  '壬': 'text-blue-400', '癸': 'text-blue-300',
 }
+
+const SCORE_GOOD_THRESHOLD = 4
+const SCORE_BAD_THRESHOLD = 0
 
 export default function Home() {
   const today = new Date()
@@ -32,14 +40,15 @@ export default function Home() {
     if (m < 1) { m = 12; y-- }
     if (m > 12) { m = 1; y++ }
     setCalMonth(m); setCalYear(y)
-    if (d < 0) setBaseDate(new Date(y, m - 1, 1))
-    else setBaseDate(new Date(y, m - 1, 1))
+    setBaseDate(new Date(y, m - 1, 1))
   }
 
   const weekdays = ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy']
   const dow = weekdays[date.getDay()]
   const isToday = date.toDateString() === today.toDateString()
-  const scoreLabel = result.tongDiem >= 4 ? 'TỐT' : result.tongDiem >= 0 ? 'TRUNG' : 'XẤU'
+  const scoreLabel = result.tongDiem >= SCORE_GOOD_THRESHOLD ? 'TỐT' : result.tongDiem >= SCORE_BAD_THRESHOLD ? 'TRUNG' : 'XẤU'
+  const isGood = result.tongDiem >= SCORE_GOOD_THRESHOLD
+  const isBad = result.tongDiem < SCORE_BAD_THRESHOLD
 
   const firstDay = new Date(calYear, calMonth - 1, 1).getDay()
   const blanks = Array(firstDay === 0 ? 6 : firstDay - 1).fill(null)
@@ -47,7 +56,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-zinc-950">
-      {/* Header */}
       <header className="sticky top-0 z-20 bg-zinc-950/95 backdrop-blur border-b border-amber-900/20">
         <div className="max-w-md mx-auto flex items-center justify-between px-3 py-2.5">
           <div className="flex items-center gap-1.5">
@@ -62,7 +70,7 @@ export default function Home() {
 
       <main className="max-w-md mx-auto px-3 py-3 space-y-3">
 
-        {/* ===== DATE NAV ===== */}
+        {/* ===== CHUYỂN NGÀY ===== */}
         <div className="flex items-center gap-2">
           <button onClick={() => goDay(-1)} className="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 hover:border-amber-700/50 active:scale-90 text-base">‹</button>
           <div className="flex-1 flex flex-col items-center py-1.5 rounded-xl bg-zinc-900 border border-zinc-800">
@@ -84,23 +92,23 @@ export default function Home() {
               ].map(p => (
                 <div key={p.l} className="bg-black/50 rounded-lg py-1.5 text-center">
                   <div className="text-[7px] text-zinc-600 uppercase tracking-wider">{p.l}</div>
-                  <div className={`text-sm font-bold tracking-wider ${CAN_COLORS[p.v[0]] || 'text-foreground'}`}>{p.v}</div>
+                  <div className={`text-sm font-bold tracking-wider ${CAN_COLORS[p.v[0]] || CAN_COLORS[STEM_VN[p.v[0]]] || ''} text-foreground`}>{vnCanChi(p.v)}</div>
                 </div>
               ))}
             </div>
             <div className="text-center leading-tight">
               <span className="text-xs text-zinc-400">{dayInfo.lunarDay}/{dayInfo.lunarMonth}/{dayInfo.lunarYear} âm lịch</span>
-              {dayInfo.solarTerm && <span className="text-[9px] text-zinc-600 ml-2">· {dayInfo.solarTerm}</span>}
+              {dayInfo.solarTerm && <span className="text-[9px] text-zinc-600 ml-2">· {vnText(dayInfo.solarTerm)}</span>}
             </div>
           </div>
 
           <div className="mx-3 h-px bg-gradient-to-r from-transparent via-amber-900/30 to-transparent" />
 
           <div className="px-3 py-2.5 flex items-center gap-3">
-            <div className={`w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center border-2 ${result.tongDiem >= 4 ? 'border-good/40' : result.tongDiem >= 0 ? 'border-zinc-600' : 'border-bad/40'}`}>
+            <div className={`w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center border-2 ${isGood ? 'border-good/40' : isBad ? 'border-bad/40' : 'border-zinc-600'}`}>
               <div className="text-center leading-none">
-                <div className={`text-xs font-black tracking-wider ${result.tongDiem >= 4 ? 'text-good' : result.tongDiem >= 0 ? 'text-neutral' : 'text-bad'}`}>{scoreLabel}</div>
-                <div className={`text-[7px] font-medium ${result.tongDiem >= 4 ? 'text-good' : result.tongDiem >= 0 ? 'text-neutral' : 'text-bad'}`}>{result.tongDiem > 0 ? '+' : ''}{result.tongDiem}</div>
+                <div className={`text-xs font-black tracking-wider ${isGood ? 'text-good' : isBad ? 'text-bad' : 'text-neutral'}`}>{scoreLabel}</div>
+                <div className={`text-[7px] font-medium ${isGood ? 'text-good' : isBad ? 'text-bad' : 'text-neutral'}`}>{result.tongDiem > 0 ? '+' : ''}{result.tongDiem}</div>
               </div>
             </div>
             <div className="flex-1 grid grid-cols-3 gap-1.5">
@@ -136,7 +144,7 @@ export default function Home() {
           </div>
         )}
 
-        {/* ===== NHẬN XÉT TAM THỨC (3 cột) ===== */}
+        {/* ===== NHẬN XÉT TAM THỨC ===== */}
         <div className="rounded-xl border border-amber-900/20 bg-zinc-900/50 px-3 py-2.5">
           <div className="flex items-center gap-1.5 mb-2">
             <span className="text-amber-500/50 text-[9px]">📋</span>
@@ -166,25 +174,28 @@ export default function Home() {
           <div className="flex items-center gap-1.5 mb-2">
             <span className="text-amber-500/50 text-[9px]">🚪</span>
             <span className="text-[7px] uppercase tracking-[0.2em] text-zinc-600">Kỳ Môn Độn Giáp</span>
-            <span className="text-[7px] text-zinc-700 ml-auto">{result.diaLoi.kyMon.escapeMode as string} · Cục {result.diaLoi.kyMon.juShu as string}</span>
+            <span className="text-[7px] text-zinc-700 ml-auto">{vnText(result.diaLoi.kyMon.escapeMode as string)} · Cục {result.diaLoi.kyMon.juShu as string}</span>
           </div>
 
           <div className="grid grid-cols-2 gap-2 mb-2">
-            {/* Bát môn */}
             <div>
               <div className="text-[7px] text-zinc-600 uppercase tracking-wider mb-1">Bát môn</div>
               <div className="grid grid-cols-4 gap-0.5">
                 {result.diaLoi.kyMon.doors && Object.entries(result.diaLoi.kyMon.doors as Record<string, string>)
                   .sort(([a], [b]) => Number(a) - Number(b))
-                  .map(([palace, door]) => (
-                    <div key={palace} className={`text-center py-1 rounded ${door === '休' || door === '生' || door === '開' ? 'bg-good/8' : door === '景' ? 'bg-zinc-800/50' : 'bg-bad/8'}`}>
-                      <div className={`text-xs font-bold ${door === '休' || door === '生' || door === '開' ? 'text-good' : door === '景' ? 'text-zinc-400' : 'text-bad'}`}>{door}</div>
-                      <div className="text-[6px] text-zinc-700">{palace}</div>
-                    </div>
-                  ))}
+                  .map(([palace, door]) => {
+                    const dVn = DOOR_VN[door] || door
+                    const isDoorGood = door === '休' || door === '生' || door === '開'
+                    const isDoorBad = door === '杜' || door === '傷' || door === '死' || door === '驚'
+                    return (
+                      <div key={palace} className={`text-center py-1 rounded ${isDoorGood ? 'bg-good/8' : isDoorBad ? 'bg-bad/8' : 'bg-zinc-800/50'}`}>
+                        <div className={`text-xs font-bold ${isDoorGood ? 'text-good' : isDoorBad ? 'text-bad' : 'text-zinc-400'}`}>{dVn}</div>
+                        <div className="text-[6px] text-zinc-700">{PALACE_VN[palace] || palace}</div>
+                      </div>
+                    )
+                  })}
               </div>
             </div>
-            {/* Lục Nhâm */}
             <div>
               <div className="text-[7px] text-zinc-600 uppercase tracking-wider mb-1">Lục Nhâm</div>
               <div className="bg-black/40 rounded-lg px-2 py-1.5">
@@ -192,36 +203,38 @@ export default function Home() {
                 <div className="flex items-center gap-1 mt-0.5">
                   {(() => {
                     const t = result.thienThoi.lucNham.transmissions as any
-                    return t ? [t.initial, t.middle, t.final].map((step, i) => (
+                    return t ? [t.initial, t.middle, t.final].map((step: string, i: number) => (
                       <div key={i} className="flex items-center gap-1">
-                        <span className="text-[10px] font-semibold text-amber-400/80 bg-amber-900/20 px-1.5 py-0.5 rounded">{step}</span>
+                        <span className="text-[10px] font-semibold text-amber-400/80 bg-amber-900/20 px-1.5 py-0.5 rounded">{BRANCH_VN[step] || step}</span>
                         {i < 2 && <span className="text-zinc-700 text-[8px]">→</span>}
                       </div>
                     )) : null
                   })()}
                 </div>
-                <div className="text-[7px] text-zinc-600 mt-1">Phép: {result.thienThoi.lucNham.method} · Nguyệt: {result.thienThoi.lucNham.monthlyGeneral}</div>
+                <div className="text-[7px] text-zinc-600 mt-1">
+                  Phép: {LIUREN_METHOD_VN[result.thienThoi.lucNham.method as string] || result.thienThoi.lucNham.method} ·
+                  Nguyệt: {BRANCH_VN[result.thienThoi.lucNham.monthlyGeneral as string] || result.thienThoi.lucNham.monthlyGeneral}
+                </div>
               </div>
             </div>
           </div>
 
-          {/* 12 Thiên tướng */}
-          <details className="group">
-            <summary className="text-[7px] uppercase tracking-wider text-zinc-600 cursor-pointer list-none flex items-center justify-between">
-              <span>12 Thiên tướng</span>
-              <span className="text-zinc-700 group-open:rotate-180 transition-transform text-[8px]">▾</span>
-            </summary>
-            <div className="mt-1.5 grid grid-cols-6 gap-0.5 pt-1.5 border-t border-amber-900/20">
-              {result.thienThoi.lucNham.generals && Object.entries(result.thienThoi.lucNham.generals as Record<string, string>).map(([branch, gen]) => (
-                <div key={branch} className="text-center py-0.5 rounded bg-black/30">
-                  <div className="text-[7px] text-zinc-500">{branch}</div>
-                  <div className={`text-[8px] font-medium ${['貴人','青龍','六合','太常','太陰'].includes(gen) ? 'text-good/70' : ['白虎','螣蛇','玄武'].includes(gen) ? 'text-bad/70' : 'text-zinc-400'}`}>
-                    {gen}
+          <div className="mt-2 pt-2 border-t border-amber-900/20">
+            <div className="text-[7px] uppercase tracking-wider text-zinc-600 mb-1.5">12 Thiên tướng</div>
+            <div className="grid grid-cols-6 gap-0.5">
+              {result.thienThoi.lucNham.generals && Object.entries(result.thienThoi.lucNham.generals as Record<string, string>).map(([branch, gen]) => {
+                const gVn = GENERAL_VN[gen] || gen
+                const isGoodGen = ['貴人','青龍','六合','太常','太陰'].includes(gen)
+                const isBadGen = ['白虎','螣蛇','玄武'].includes(gen)
+                return (
+                  <div key={branch} className="text-center py-0.5 rounded bg-black/30">
+                    <div className="text-[7px] text-zinc-500">{BRANCH_VN[branch] || branch}</div>
+                    <div className={`text-[8px] font-medium ${isGoodGen ? 'text-good/70' : isBadGen ? 'text-bad/70' : 'text-zinc-400'}`}>{gVn}</div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
-          </details>
+          </div>
         </div>
 
         {/* ===== LỊCH THÁNG ===== */}
@@ -232,9 +245,9 @@ export default function Home() {
               <span className="text-[7px] uppercase tracking-[0.2em] text-zinc-600">Lịch tháng</span>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={() => { navCal(-1) }} className="w-6 h-6 rounded bg-black/40 border border-zinc-800 text-zinc-500 flex items-center justify-center text-[10px] hover:border-amber-700/50">‹</button>
+              <button onClick={() => navCal(-1)} className="w-6 h-6 rounded bg-black/40 border border-zinc-800 text-zinc-500 flex items-center justify-center text-[10px] hover:border-amber-700/50">‹</button>
               <span className="text-[10px] font-semibold text-foreground w-16 text-center">Tháng {calMonth}</span>
-              <button onClick={() => { navCal(1) }} className="w-6 h-6 rounded bg-black/40 border border-zinc-800 text-zinc-500 flex items-center justify-center text-[10px] hover:border-amber-700/50">›</button>
+              <button onClick={() => navCal(1)} className="w-6 h-6 rounded bg-black/40 border border-zinc-800 text-zinc-500 flex items-center justify-center text-[10px] hover:border-amber-700/50">›</button>
             </div>
           </div>
           <div className="grid grid-cols-7 gap-px">
@@ -268,7 +281,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ===== TỔNG QUAN NGÀY (chi tiết khoa học) ===== */}
+        {/* ===== TỔNG QUAN NGÀY ===== */}
         <div className="rounded-xl border border-amber-900/20 bg-zinc-900/50 px-3 py-2.5">
           <div className="flex items-center gap-1.5 mb-2">
             <span className="text-amber-500/50 text-[9px]">📊</span>
@@ -276,20 +289,19 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-2 gap-1">
             <div className="space-y-0.5">
-              <Row label="Năm" value={dayInfo.canChi.year} sub={dayInfo.animal} />
-              <Row label="Tháng" value={dayInfo.canChi.month} />
-              <Row label="Ngày" value={dayInfo.canChi.day} />
-              <Row label="Giờ" value={dayInfo.canChi.hour} />
+              <Row label="Năm" value={vnCanChi(dayInfo.canChi.year)} sub={ANIMAL_VN[dayInfo.animal] || dayInfo.animal} />
+              <Row label="Tháng" value={vnCanChi(dayInfo.canChi.month)} />
+              <Row label="Ngày" value={vnCanChi(dayInfo.canChi.day)} />
+              <Row label="Giờ" value={vnCanChi(dayInfo.canChi.hour)} />
             </div>
             <div className="space-y-0.5">
               <Row label="Âm lịch" value={`${dayInfo.lunarDay}/${dayInfo.lunarMonth}`} sub={`Năm ${dayInfo.lunarYear}`} />
-              <Row label="Tiết khí" value={dayInfo.solarTerm || '—'} />
-              <Row label="Trực tinh" value={dayInfo.fitness.name} />
-              <Row label="Cung hoàng đạo" value={dayInfo.zodiac} />
+              <Row label="Tiết khí" value={dayInfo.solarTerm ? vnText(dayInfo.solarTerm) : '—'} />
+              <Row label="Trực tinh" value={vnText(dayInfo.fitness.name)} />
+              <Row label="Cung hoàng đạo" value={ZODIAC_VN[dayInfo.zodiac] || dayInfo.zodiac} />
             </div>
           </div>
 
-          {/* Flying stars */}
           <div className="mt-2 pt-2 border-t border-amber-900/20">
             <div className="text-[7px] uppercase tracking-wider text-zinc-600 mb-1">Phi tinh (Cửu tinh)</div>
             <div className="grid grid-cols-3 gap-1">
@@ -299,14 +311,13 @@ export default function Home() {
                   <div key={k} className="bg-black/40 rounded px-1.5 py-0.5 flex items-center gap-1">
                     <span className="text-[6px] text-zinc-600 uppercase w-5">{k === 'hour' ? 'Giờ' : k === 'day' ? 'Ngày' : k === 'month' ? 'Tháng' : 'Năm'}</span>
                     <span className="text-[9px] font-semibold text-amber-400/80">{fs.number}</span>
-                    <span className="text-[7px] text-zinc-500">{fs.name}</span>
+                    <span className="text-[7px] text-zinc-500">{FLYING_STAR_VN[fs.name] || fs.name}</span>
                   </div>
                 )
               })}
             </div>
           </div>
 
-          {/* PengZu */}
           {dayInfo.pengZu.length > 0 && (
             <div className="mt-2 pt-2 border-t border-amber-900/20">
               <div className="text-[7px] uppercase tracking-wider text-zinc-600 mb-1">Bành Tổ kỵ</div>
@@ -318,14 +329,14 @@ export default function Home() {
             </div>
           )}
 
-          {/* Thần sát */}
           {dayInfo.flags.length > 0 && (
             <div className="mt-2 pt-2 border-t border-amber-900/20">
               <div className="text-[7px] uppercase tracking-wider text-zinc-600 mb-1">Thần sát</div>
               <div className="flex flex-wrap gap-1">
                 {dayInfo.flags.map((f: any, i: number) => {
+                  const rawName = typeof f === 'object' ? (f as any).name : String(f)
                   const isGood = typeof f === 'object' ? (f as any).auspicious : true
-                  const name = typeof f === 'object' ? (f as any).name : String(f)
+                  const name = vnText(rawName) || rawName
                   return (
                     <span key={i} className={`text-[8px] px-1.5 py-0.5 rounded border ${isGood ? 'bg-good/8 text-good/70 border-good/20' : 'bg-bad/8 text-bad/70 border-bad/20'}`}>
                       {name}
