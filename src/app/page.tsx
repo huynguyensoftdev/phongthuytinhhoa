@@ -66,6 +66,7 @@ export default function Home() {
   const firstDay = new Date(calYear, calMonth - 1, 1).getDay()
   const blanks = Array(firstDay === 0 ? 6 : firstDay - 1).fill(null)
   const todayStr = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`
+  const baseDateStr = `${pd}/${pm}/${py}`
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
@@ -352,27 +353,28 @@ export default function Home() {
             ))}
             {blanks.map((_, i) => <div key={`b-${i}`} className="py-2" />)}
             {monthDays.map((d, i) => {
-              const isSel = calYear === py && calMonth === pm && d.lunarDay === pd
+              const isSel = d.solarDate === baseDateStr
               const isToday2 = d.solarDate === todayStr
               return (
-                <button key={i} onClick={() => pickDate(d.lunarDay)}
+                <button key={i} onClick={() => pickDate(i + 1)}
                   className={`text-center py-2 text-xs rounded-sm transition-all relative
-                    ${isSel ? 'bg-[var(--primary)]/20 text-[var(--primary)] font-bold ring-1 ring-[var(--primary)]/40' : 'hover:bg-[var(--card-sub)] text-[var(--text-muted)]'}
-                    ${d.fitness.auspicious && !isSel ? 'text-[var(--good)]' : ''}`}>
+                    ${isSel ? 'bg-[var(--primary)]/30 text-[var(--primary)] font-bold ring-2 ring-[var(--primary)]/60' : d.fitness.auspicious ? 'bg-[var(--good)]/8 text-[var(--good)] font-medium' : 'hover:bg-[var(--card-sub)] text-[var(--text-muted)]'}
+                    ${isToday2 && !isSel ? 'ring-1 ring-[var(--primary)]/20' : ''}`}>
                   {d.lunarDay}
-                  <div className={`h-0.5 w-0.5 mx-auto rounded-full mt-0.5 ${d.fitness.auspicious ? 'bg-[var(--good)]/50' : 'bg-[var(--text-subtle)]'}`} />
+                  {isToday2 && <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[var(--primary)]" />}
+                  {d.fitness.auspicious && !isSel && <div className="h-1 w-1 mx-auto rounded-full mt-0.5 bg-[var(--good)]/70" />}
                 </button>
               )
             })}
           </div>
           <div className="flex gap-4 justify-center mt-2">
             <div className="flex items-center gap-1.5">
-              <div className="w-2 h-2 rounded-sm bg-[var(--good)]/30" />
-              <span className="text-[9px] text-[var(--text-muted)]">Tốt</span>
+              <div className="w-2.5 h-2.5 rounded-sm bg-[var(--good)]" />
+              <span className="text-[10px] text-[var(--good)] font-medium">Tốt</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <div className="w-2 h-2 rounded-sm bg-[var(--primary)]/30" />
-              <span className="text-[9px] text-[var(--text-muted)]">Đã chọn</span>
+              <div className="w-2.5 h-2.5 rounded-sm bg-[var(--primary)]" />
+              <span className="text-[10px] text-[var(--primary)] font-medium">Đã chọn</span>
             </div>
           </div>
         </div>
