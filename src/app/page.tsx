@@ -39,7 +39,7 @@ export default function Home() {
   const weekdays = ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy']
   const dow = weekdays[date.getDay()]
   const isToday = date.toDateString() === today.toDateString()
-  const scoreLabel = result.tongDiem >= 4 ? 'CÁT' : result.tongDiem >= 0 ? 'BÌNH' : 'HUNG'
+  const scoreLabel = result.tongDiem >= 4 ? 'TỐT' : result.tongDiem >= 0 ? 'TRUNG' : 'XẤU'
 
   const firstDay = new Date(calYear, calMonth - 1, 1).getDay()
   const blanks = Array(firstDay === 0 ? 6 : firstDay - 1).fill(null)
