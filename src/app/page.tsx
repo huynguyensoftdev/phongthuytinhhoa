@@ -243,50 +243,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ===== LỊCH THÁNG ===== */}
-        <div className="rounded-xl border border-amber-900/20 bg-zinc-900/50 px-3 py-2.5">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-1.5">
-              <span className="text-amber-500/50 text-[9px]">🗓</span>
-              <span className="text-[7px] uppercase tracking-[0.2em] text-zinc-600">Lịch tháng</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <button onClick={() => navCal(-1)} className="w-6 h-6 rounded bg-black/40 border border-zinc-800 text-zinc-500 flex items-center justify-center text-[10px] hover:border-amber-700/50">‹</button>
-              <span className="text-[10px] font-semibold text-foreground w-16 text-center">Tháng {calMonth}</span>
-              <button onClick={() => navCal(1)} className="w-6 h-6 rounded bg-black/40 border border-zinc-800 text-zinc-500 flex items-center justify-center text-[10px] hover:border-amber-700/50">›</button>
-            </div>
-          </div>
-          <div className="grid grid-cols-7 gap-px">
-            {['T2','T3','T4','T5','T6','T7','CN'].map(d => (
-              <div key={d} className="text-center text-[7px] text-zinc-600 py-1">{d}</div>
-            ))}
-            {blanks.map((_, i) => <div key={`b-${i}`} className="py-2" />)}
-            {monthDays.map((d, i) => {
-              const isSel = calYear === py && calMonth === pm && d.lunarDay === pd
-              const isToday2 = d.solarDate === todayStr
-              return (
-                <button key={i} onClick={() => pickDate(d.lunarDay)}
-                  className={`text-center py-1.5 text-[10px] rounded-sm transition-all relative
-                    ${isSel ? 'bg-amber-600/30 text-amber-300 font-bold ring-1 ring-amber-500/50' : 'hover:bg-zinc-800 text-zinc-400'}
-                    ${d.fitness.auspicious && !isSel ? 'text-good/70' : ''}`}>
-                  {d.lunarDay}
-                  <div className={`h-0.5 w-0.5 mx-auto rounded-full mt-0.5 ${d.fitness.auspicious ? 'bg-good/50' : 'bg-zinc-700'}`} />
-                </button>
-              )
-            })}
-          </div>
-          <div className="flex gap-3 justify-center mt-1.5">
-            <div className="flex items-center gap-1">
-              <div className="w-1.5 h-1.5 rounded-sm bg-good/30" />
-              <span className="text-[7px] text-zinc-600">Tốt</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-1.5 h-1.5 rounded-sm bg-amber-600/40" />
-              <span className="text-[7px] text-zinc-600">Đã chọn</span>
-            </div>
-          </div>
-        </div>
-
         {/* ===== TỔNG QUAN NGÀY ===== */}
         <div className="rounded-xl border border-amber-900/20 bg-zinc-900/50 px-3 py-2.5">
           <div className="flex items-center gap-1.5 mb-2">
@@ -352,6 +308,50 @@ export default function Home() {
               </div>
             </div>
           )}
+        </div>
+
+        {/* ===== LỊCH THÁNG ===== */}
+        <div className="rounded-xl border border-amber-900/20 bg-zinc-900/50 px-3 py-2.5">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-1.5">
+              <span className="text-amber-500/50 text-[9px]">🗓</span>
+              <span className="text-[7px] uppercase tracking-[0.2em] text-zinc-600">Lịch tháng</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <button onClick={() => navCal(-1)} className="w-6 h-6 rounded bg-black/40 border border-zinc-800 text-zinc-500 flex items-center justify-center text-[10px] hover:border-amber-700/50">‹</button>
+              <span className="text-[10px] font-semibold text-foreground w-16 text-center">Tháng {calMonth}</span>
+              <button onClick={() => navCal(1)} className="w-6 h-6 rounded bg-black/40 border border-zinc-800 text-zinc-500 flex items-center justify-center text-[10px] hover:border-amber-700/50">›</button>
+            </div>
+          </div>
+          <div className="grid grid-cols-7 gap-px">
+            {['T2','T3','T4','T5','T6','T7','CN'].map(d => (
+              <div key={d} className="text-center text-[7px] text-zinc-600 py-1">{d}</div>
+            ))}
+            {blanks.map((_, i) => <div key={`b-${i}`} className="py-2" />)}
+            {monthDays.map((d, i) => {
+              const isSel = calYear === py && calMonth === pm && d.lunarDay === pd
+              const isToday2 = d.solarDate === todayStr
+              return (
+                <button key={i} onClick={() => pickDate(d.lunarDay)}
+                  className={`text-center py-1.5 text-[10px] rounded-sm transition-all relative
+                    ${isSel ? 'bg-amber-600/30 text-amber-300 font-bold ring-1 ring-amber-500/50' : 'hover:bg-zinc-800 text-zinc-400'}
+                    ${d.fitness.auspicious && !isSel ? 'text-good/70' : ''}`}>
+                  {d.lunarDay}
+                  <div className={`h-0.5 w-0.5 mx-auto rounded-full mt-0.5 ${d.fitness.auspicious ? 'bg-good/50' : 'bg-zinc-700'}`} />
+                </button>
+              )
+            })}
+          </div>
+          <div className="flex gap-3 justify-center mt-1.5">
+            <div className="flex items-center gap-1">
+              <div className="w-1.5 h-1.5 rounded-sm bg-good/30" />
+              <span className="text-[7px] text-zinc-600">Tốt</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="w-1.5 h-1.5 rounded-sm bg-amber-600/40" />
+              <span className="text-[7px] text-zinc-600">Đã chọn</span>
+            </div>
+          </div>
         </div>
 
       </main>
