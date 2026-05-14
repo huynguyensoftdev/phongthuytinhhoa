@@ -7,6 +7,7 @@ import {
   EIGHT_DOORS,
   HEAVENLY_GENERALS,
 } from '@4n6h4x0r/stem-branch'
+import { DOOR_VN, GENERAL_VN, LIUREN_METHOD_VN, BRANCH_VN, vnText } from './vn'
 
 export interface TamThucResult {
   date: string
@@ -87,11 +88,11 @@ export function evaluateTamThuc(date: Date): TamThucResult {
   const methodScore = LIUREN_METHOD_SCORE[method] ?? 0
   thienThoiDiem += methodScore
   if (methodScore > 0) {
-    thienThoiNx.push(`Phép Lục Nhâm "${method}" — tốt cho khởi sự`)
+    thienThoiNx.push(`Phép Lục Nhâm "${vnText(method)}" — tốt cho khởi sự`)
   } else if (methodScore < 0) {
-    thienThoiNx.push(`Phép Lục Nhâm "${method}" — thời vận trì trệ`)
+    thienThoiNx.push(`Phép Lục Nhâm "${vnText(method)}" — thời vận trì trệ`)
   } else {
-    thienThoiNx.push(`Phép Lục Nhâm "${method}" — trung bình`)
+    thienThoiNx.push(`Phép Lục Nhâm "${vnText(method)}" — trung bình`)
   }
 
   // 12 generals - check day general position
@@ -102,11 +103,11 @@ export function evaluateTamThuc(date: Date): TamThucResult {
     const genScore = GENERAL_SCORE[dayGeneral] ?? 0
     thienThoiDiem += genScore
     if (genScore > 0) {
-      thienThoiNx.push(`Gặp ${dayGeneral} — Thiên thời thuận lợi`)
+      thienThoiNx.push(`Gặp ${vnText(dayGeneral)} — Thiên thời thuận lợi`)
     } else if (genScore < 0) {
-      thienThoiNx.push(`Gặp ${dayGeneral} — Thiên thời bất lợi`)
+      thienThoiNx.push(`Gặp ${vnText(dayGeneral)} — Thiên thời bất lợi`)
     } else {
-      thienThoiNx.push(`Gặp ${dayGeneral} — Thiên thời bình thường`)
+      thienThoiNx.push(`Gặp ${vnText(dayGeneral)} — Thiên thời bình thường`)
     }
   }
 
@@ -135,7 +136,7 @@ export function evaluateTamThuc(date: Date): TamThucResult {
     const mgScore = GENERAL_SCORE[lucNham.monthlyGeneral as string] ?? 0
     thienThoiDiem += mgScore * 0.5
     if (mgScore > 0) {
-      thienThoiNx.push(`Nguyệt tướng ${lucNham.monthlyGeneral} — trợ lực thời vận`)
+      thienThoiNx.push(`Nguyệt tướng ${vnText(lucNham.monthlyGeneral as string)} — trợ lực thời vận`)
     }
   }
 
@@ -153,10 +154,10 @@ export function evaluateTamThuc(date: Date): TamThucResult {
     const goodDoors = doorNames.filter(d => (DOOR_SCORE[d] ?? 0) > 0)
     const badDoors = doorNames.filter(d => (DOOR_SCORE[d] ?? 0) < 0)
     if (goodDoors.length >= 3) {
-      diaLoiNx.push(`${goodDoors.join(', ')} mở — địa lợi, nhiều hướng tốt`)
+      diaLoiNx.push(`${goodDoors.map(d => vnText(d)).join(', ')} mở — địa lợi, nhiều hướng tốt`)
     }
     if (badDoors.length > 0) {
-      diaLoiNx.push(`${badDoors.join(', ')} gặp — cẩn trọng phương hướng`)
+      diaLoiNx.push(`${badDoors.map(d => vnText(d)).join(', ')} gặp — cẩn trọng phương hướng`)
     }
   }
 
@@ -177,9 +178,9 @@ export function evaluateTamThuc(date: Date): TamThucResult {
     const zsScore = DOOR_SCORE[zsDoor] ?? 0
     diaLoiDiem += zsScore
     if (zsScore > 0) {
-      diaLoiNx.push(`Trực sử ${zsDoor} — chủ sự hanh thông`)
+      diaLoiNx.push(`Trực sử ${vnText(zsDoor)} — chủ sự hanh thông`)
     } else if (zsScore < 0) {
-      diaLoiNx.push(`Trực sử ${zsDoor} — chủ sự trắc trở`)
+      diaLoiNx.push(`Trực sử ${vnText(zsDoor)} — chủ sự trắc trở`)
     }
   }
 
@@ -231,7 +232,7 @@ export function evaluateTamThuc(date: Date): TamThucResult {
     for (const [branch, gen] of Object.entries(generals)) {
       if (nobles.includes(gen)) {
         hasNoble = true
-        nhanHoaNx.push(`Quý nhân ${gen} tại ${branch} — được người giúp đỡ`)
+        nhanHoaNx.push(`Quý nhân ${vnText(gen)} tại ${vnText(branch)} — được người giúp đỡ`)
         break
       }
     }
@@ -244,7 +245,7 @@ export function evaluateTamThuc(date: Date): TamThucResult {
     const gen = generals[lucNham.dayBranch as string] || ''
     if (gen === '貴人' || gen === '青龍') {
       nhanHoaDiem += 1
-      nhanHoaNx.push(`Thiên Ất ${gen} hộ thân — nhân duyên tốt`)
+      nhanHoaNx.push(`Thiên Ất ${vnText(gen)} hộ thân — nhân duyên tốt`)
     }
   }
 

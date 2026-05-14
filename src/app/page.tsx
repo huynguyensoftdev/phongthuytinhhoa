@@ -39,6 +39,12 @@ export default function Home() {
   const result = useMemo(() => evaluateTamThuc(date), [date])
   const dayInfo = useMemo(() => getDayInfo(date), [date])
   const monthDays = useMemo(() => getMonthDays(calYear, calMonth), [calYear, calMonth])
+  const monthScores = useMemo(() => {
+    return monthDays.map(d => {
+      const [dd, mm, yyyy] = d.solarDate.split('/').map(Number)
+      return evaluateTamThuc(new Date(yyyy, mm - 1, dd))
+    })
+  }, [monthDays])
   const batMon = useMemo(() => {
     const hourBranch = dayInfo.canChi.hour[1] || '子'
     return computeBatMonDaiDon(dayInfo.lunarMonth, dayInfo.lunarDay, hourBranch)
@@ -355,24 +361,32 @@ export default function Home() {
             {monthDays.map((d, i) => {
               const isSel = d.solarDate === baseDateStr
               const isToday2 = d.solarDate === todayStr
+              const score = monthScores[i]?.tongDiem ?? 0
+              const isGood = score >= 4
+              const isBad = score < 0
               return (
                 <button key={i} onClick={() => pickDate(i + 1)}
                   className={`text-center py-2 text-xs rounded-sm transition-all relative
-                    ${isSel ? 'bg-[var(--primary)]/30 text-[var(--primary)] font-bold ring-2 ring-[var(--primary)]/60' : d.fitness.auspicious ? 'bg-[var(--good)]/8 text-[var(--good)] font-medium' : 'hover:bg-[var(--card-sub)] text-[var(--text-muted)]'}
+                    ${isSel ? 'bg-[var(--primary)]/30 text-[var(--primary)] font-bold ring-2 ring-[var(--primary)]/60' : isGood ? 'bg-[var(--good)]/10 text-[var(--good)] font-medium' : isBad ? 'text-[var(--bad)]/60' : 'hover:bg-[var(--card-sub)] text-[var(--text-muted)]'}
                     ${isToday2 && !isSel ? 'ring-1 ring-[var(--primary)]/20' : ''}`}>
                   {d.lunarDay}
                   {isToday2 && <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[var(--primary)]" />}
-                  {d.fitness.auspicious && !isSel && <div className="h-1 w-1 mx-auto rounded-full mt-0.5 bg-[var(--good)]/70" />}
+                  {isGood && !isSel && <div className="h-1 w-1 mx-auto rounded-full mt-0.5 bg-[var(--good)]/70" />}
+                  {isBad && !isSel && <div className="h-0.5 w-0.5 mx-auto rounded-full mt-0.5 bg-[var(--bad)]/50" />}
                 </button>
               )
             })}
           </div>
-          <div className="flex gap-4 justify-center mt-2">
-            <div className="flex items-center gap-1.5">
+          <div className="flex gap-3 justify-center mt-2">
+            <div className="flex items-center gap-1">
               <div className="w-2.5 h-2.5 rounded-sm bg-[var(--good)]" />
               <span className="text-[10px] text-[var(--good)] font-medium">Tốt</span>
             </div>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1">
+              <div className="w-2.5 h-2.5 rounded-sm bg-[var(--bad)]" />
+              <span className="text-[10px] text-[var(--bad)] font-medium">Xấu</span>
+            </div>
+            <div className="flex items-center gap-1">
               <div className="w-2.5 h-2.5 rounded-sm bg-[var(--primary)]" />
               <span className="text-[10px] text-[var(--primary)] font-medium">Đã chọn</span>
             </div>
