@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { getMonthDays } from '@/lib/lich'
+import { SunMoon, ChevronLeft, ChevronRight } from 'lucide-react'
 
 export default function LichVanNienPage() {
   const today = new Date()
@@ -33,8 +34,8 @@ export default function LichVanNienPage() {
     <div className="flex flex-col min-h-screen bg-[var(--background)]">
       <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-[var(--card-bg)]/90 backdrop-blur-lg border-b border-[var(--card-border)]">
         <Link href="/" className="flex items-center gap-2.5">
-          <span className="text-base opacity-80">☯</span>
-          <span className="text-[11px] font-semibold tracking-[0.3em] text-[var(--primary)]/80">Lịch Phong thuỷ</span>
+          <SunMoon className="w-4 h-4 opacity-80" />
+          <span className="text-[11px] font-semibold tracking-[0.3em] text-[var(--primary)]/80">LỊCH PHONG THUỶ</span>
         </Link>
         <Link href="/xem-ngay" className="text-xs text-[var(--text-muted)] hover:text-[var(--primary)] transition-colors duration-300">Xem ngày</Link>
       </header>
@@ -43,8 +44,8 @@ export default function LichVanNienPage() {
         {/* Month selector */}
         <div className="flex items-center justify-between mb-4 rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] px-3 py-3 card-glow">
           <button onClick={() => nav(-1)}
-            className="w-9 h-9 rounded-lg bg-[var(--card-sub)] border border-[var(--card-border)] text-[var(--text-muted)] flex items-center justify-center hover:border-[var(--primary)]/30 hover:text-[var(--primary)] transition-all duration-200 active:scale-90 text-sm">
-            ←
+            className="w-9 h-9 rounded-lg bg-[var(--card-sub)] border border-[var(--card-border)] text-[var(--text-muted)] flex items-center justify-center hover:border-[var(--primary)]/30 hover:text-[var(--primary)] transition-all duration-200 active:scale-90">
+            <ChevronLeft className="w-4 h-4" />
           </button>
           <div className="text-center">
             <div className="text-sm font-semibold text-[var(--foreground)]">{monthNames[month - 1]} {year}</div>
@@ -54,8 +55,8 @@ export default function LichVanNienPage() {
             </button>
           </div>
           <button onClick={() => nav(1)}
-            className="w-9 h-9 rounded-lg bg-[var(--card-sub)] border border-[var(--card-border)] text-[var(--text-muted)] flex items-center justify-center hover:border-[var(--primary)]/30 hover:text-[var(--primary)] transition-all duration-200 active:scale-90 text-sm">
-            →
+            className="w-9 h-9 rounded-lg bg-[var(--card-sub)] border border-[var(--card-border)] text-[var(--text-muted)] flex items-center justify-center hover:border-[var(--primary)]/30 hover:text-[var(--primary)] transition-all duration-200 active:scale-90">
+            <ChevronRight className="w-4 h-4" />
           </button>
         </div>
 

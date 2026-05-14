@@ -10,6 +10,7 @@ import {
   computeBatMonDaiDon, PALACE_DOOR_HOME,
 } from '@/lib/vn'
 import { ThemeSwitcher } from '@/components/ThemeProvider'
+import { SunMoon, ChevronLeft, ChevronRight, Clock, ClipboardList, Sun, Globe, Users, BarChart3, Calendar } from 'lucide-react'
 
 const CAN_COLORS: Record<string, string> = {
   '甲': 'text-emerald-600', '乙': 'text-emerald-600',
@@ -72,8 +73,8 @@ export default function Home() {
       <header className="sticky top-0 z-20 bg-[var(--card-bg)]/90 backdrop-blur-lg border-b border-[var(--card-border)]">
         <div className="max-w-md mx-auto flex items-center justify-between px-3 py-3">
           <div className="flex items-center gap-2.5">
-            <span className="text-base opacity-80">☯</span>
-            <span className="text-[11px] font-semibold tracking-[0.3em] text-[var(--primary)]/80">Lịch Phong thuỷ</span>
+            <SunMoon className="w-4 h-4 opacity-80" />
+            <span className="text-[11px] font-semibold tracking-[0.3em] text-[var(--primary)]/80">LỊCH PHONG THUỶ</span>
           </div>
           <div className="flex items-center gap-2">
             <ThemeSwitcher />
@@ -88,13 +89,13 @@ export default function Home() {
 
         {/* ===== CHUYỂN NGÀY ===== */}
         <div className="flex items-center gap-2">
-          <button onClick={() => goDay(-1)} className="w-10 h-10 rounded-xl bg-[var(--card-bg)] border border-[var(--card-border)] flex items-center justify-center text-[var(--text-muted)] hover:border-[var(--primary)]/30 hover:text-[var(--primary)] active:scale-90 transition-all duration-200 text-lg">‹</button>
+          <button onClick={() => goDay(-1)} className="w-10 h-10 rounded-xl bg-[var(--card-bg)] border border-[var(--card-border)] flex items-center justify-center text-[var(--text-muted)] hover:border-[var(--primary)]/30 hover:text-[var(--primary)] active:scale-90 transition-all duration-200"><ChevronLeft className="w-5 h-5" /></button>
           <div className="flex-1 flex flex-col items-center py-2.5 rounded-xl bg-[var(--card-bg)] border border-[var(--card-border)]">
             <span className="text-base font-bold text-[var(--foreground)]">{pd < 10 ? '0'+pd : pd}/{pm < 10 ? '0'+pm : pm}/{py}</span>
             <span className="text-xs text-[var(--text-muted)]">{dow}{isToday ? ' · Hôm nay' : ''}</span>
             <span className="text-[10px] text-[var(--text-subtle)] mt-0.5">{dayInfo.lunarDay}/{dayInfo.lunarMonth}/{dayInfo.lunarYear} âm lịch</span>
           </div>
-          <button onClick={() => goDay(1)} className="w-10 h-10 rounded-xl bg-[var(--card-bg)] border border-[var(--card-border)] flex items-center justify-center text-[var(--text-muted)] hover:border-[var(--primary)]/30 hover:text-[var(--primary)] active:scale-90 transition-all duration-200 text-lg">›</button>
+          <button onClick={() => goDay(1)} className="w-10 h-10 rounded-xl bg-[var(--card-bg)] border border-[var(--card-border)] flex items-center justify-center text-[var(--text-muted)] hover:border-[var(--primary)]/30 hover:text-[var(--primary)] active:scale-90 transition-all duration-200"><ChevronRight className="w-5 h-5" /></button>
         </div>
 
         {/* ===== LÁ SỐ ===== */}
@@ -146,7 +147,7 @@ export default function Home() {
         {dayInfo.hourGood.length > 0 && (
           <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] px-3 py-2.5 card-glow">
             <div className="flex items-center gap-1.5 mb-2">
-              <span className="text-[var(--primary)]/60 text-xs">🕐</span>
+              <Clock className="w-3.5 h-3.5 text-[var(--primary)]/60" />
               <span className="text-xs uppercase tracking-[0.15em] text-[var(--text-muted)]">Hoàng đạo</span>
               <span className="text-[10px] text-[var(--text-subtle)]">· {dayInfo.hourGood.length} khung giờ</span>
             </div>
@@ -164,17 +165,19 @@ export default function Home() {
         {/* ===== NHẬN XÉT TAM THỨC ===== */}
         <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] px-3 py-2.5 card-glow">
           <div className="flex items-center gap-1.5 mb-2.5">
-            <span className="text-[var(--primary)]/60 text-xs">📋</span>
+            <ClipboardList className="w-3.5 h-3.5 text-[var(--primary)]/60" />
             <span className="text-xs uppercase tracking-[0.15em] text-[var(--text-muted)]">Nhận xét Tam Thức</span>
           </div>
           <div className="space-y-2">
             {([
-              { key: 'thienThoi' as const, label: 'Thiên thời', icon: '🌤', color: result.thienThoi.diem >= 2 ? 'text-[var(--good)]' : result.thienThoi.diem >= 0 ? 'text-[var(--text-muted)]' : 'text-[var(--bad)]', nx: result.thienThoi.nhanXet, diem: result.thienThoi.diem },
-              { key: 'diaLoi' as const, label: 'Địa lợi', icon: '🌍', color: result.diaLoi.diem >= 2 ? 'text-[var(--good)]' : result.diaLoi.diem >= 0 ? 'text-[var(--text-muted)]' : 'text-[var(--bad)]', nx: result.diaLoi.nhanXet, diem: result.diaLoi.diem },
-              { key: 'nhanHoa' as const, label: 'Nhân hòa', icon: '👥', color: result.nhanHoa.diem >= 2 ? 'text-[var(--good)]' : result.nhanHoa.diem >= 0 ? 'text-[var(--text-muted)]' : 'text-[var(--bad)]', nx: result.nhanHoa.nhanXet, diem: result.nhanHoa.diem },
-            ]).map(col => (
+              { key: 'thienThoi' as const, label: 'Thiên thời', icon: Sun, color: result.thienThoi.diem >= 2 ? 'text-[var(--good)]' : result.thienThoi.diem >= 0 ? 'text-[var(--text-muted)]' : 'text-[var(--bad)]', nx: result.thienThoi.nhanXet, diem: result.thienThoi.diem },
+              { key: 'diaLoi' as const, label: 'Địa lợi', icon: Globe, color: result.diaLoi.diem >= 2 ? 'text-[var(--good)]' : result.diaLoi.diem >= 0 ? 'text-[var(--text-muted)]' : 'text-[var(--bad)]', nx: result.diaLoi.nhanXet, diem: result.diaLoi.diem },
+              { key: 'nhanHoa' as const, label: 'Nhân hòa', icon: Users, color: result.nhanHoa.diem >= 2 ? 'text-[var(--good)]' : result.nhanHoa.diem >= 0 ? 'text-[var(--text-muted)]' : 'text-[var(--bad)]', nx: result.nhanHoa.nhanXet, diem: result.nhanHoa.diem },
+            ]).map(col => {
+              const IconComp = col.icon
+              return (
               <div key={col.key} className="flex items-start gap-2.5 rounded-lg bg-[var(--card-sub)] px-3 py-2 border border-transparent hover:border-[var(--primary)]/10 transition-colors">
-                <span className="text-sm shrink-0 mt-0.5">{col.icon}</span>
+                <IconComp className="w-4 h-4 shrink-0 mt-0.5 text-[var(--text-muted)]" />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
                     <span className={`text-xs font-bold ${col.color}`}>{col.label}</span>
@@ -185,7 +188,8 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-            ))}
+              )
+            })}
           </div>
         </div>
 
@@ -264,7 +268,7 @@ export default function Home() {
         {/* ===== TỔNG QUAN NGÀY ===== */}
         <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] px-3 py-2.5 card-glow">
           <div className="flex items-center gap-1.5 mb-2.5">
-            <span className="text-[var(--primary)]/60 text-xs">📊</span>
+            <BarChart3 className="w-3.5 h-3.5 text-[var(--primary)]/60" />
             <span className="text-xs uppercase tracking-[0.15em] text-[var(--text-muted)]">Tổng quan ngày · Can Chi & Ngũ Hành</span>
           </div>
           <div className="grid grid-cols-2 gap-1">
@@ -333,13 +337,13 @@ export default function Home() {
         <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] px-3 py-2.5 card-glow">
           <div className="flex items-center justify-between mb-2.5">
             <div className="flex items-center gap-1.5">
-              <span className="text-[var(--primary)]/60 text-xs">🗓</span>
+              <Calendar className="w-3.5 h-3.5 text-[var(--primary)]/60" />
               <span className="text-xs uppercase tracking-[0.15em] text-[var(--text-muted)]">Lịch tháng</span>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={() => navCal(-1)} className="w-7 h-7 rounded bg-[var(--card-sub)] border border-[var(--card-border)] text-[var(--text-muted)] flex items-center justify-center text-xs hover:border-[var(--primary)]/30 hover:text-[var(--primary)] transition-all duration-200">‹</button>
+              <button onClick={() => navCal(-1)} className="w-7 h-7 rounded bg-[var(--card-sub)] border border-[var(--card-border)] text-[var(--text-muted)] flex items-center justify-center hover:border-[var(--primary)]/30 hover:text-[var(--primary)] transition-all duration-200"><ChevronLeft className="w-4 h-4" /></button>
               <span className="text-xs font-semibold text-[var(--foreground)] w-16 text-center">Tháng {calMonth}</span>
-              <button onClick={() => navCal(1)} className="w-7 h-7 rounded bg-[var(--card-sub)] border border-[var(--card-border)] text-[var(--text-muted)] flex items-center justify-center text-xs hover:border-[var(--primary)]/30 hover:text-[var(--primary)] transition-all duration-200">›</button>
+              <button onClick={() => navCal(1)} className="w-7 h-7 rounded bg-[var(--card-sub)] border border-[var(--card-border)] text-[var(--text-muted)] flex items-center justify-center hover:border-[var(--primary)]/30 hover:text-[var(--primary)] transition-all duration-200"><ChevronRight className="w-4 h-4" /></button>
             </div>
           </div>
           <div className="grid grid-cols-7 gap-px">

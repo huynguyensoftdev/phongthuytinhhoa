@@ -6,6 +6,7 @@ import { evaluateTamThuc, type TamThucResult } from '@/lib/tamthuc'
 import { getDayInfo } from '@/lib/lich'
 import { vnText, getDayElement, DOOR_VN, PALACE_VN, PALACE_DOOR_HOME, computeBatMonDaiDon } from '@/lib/vn'
 import { ThemeSwitcher } from '@/components/ThemeProvider'
+import { SunMoon, Clock, ClipboardList } from 'lucide-react'
 
 const ELEMENT_COLOR: Record<string, string> = {
   'Mộc': 'text-emerald-600', 'Hỏa': 'text-red-600',
@@ -49,8 +50,8 @@ export default function XemNgayPage() {
     <div className="flex flex-col min-h-screen bg-[var(--background)]">
       <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-[var(--card-bg)]/90 backdrop-blur-lg border-b border-[var(--card-border)]">
         <Link href="/" className="flex items-center gap-2.5">
-          <span className="text-base opacity-80">☯</span>
-          <span className="text-[11px] font-semibold tracking-[0.3em] text-[var(--primary)]/80">Lịch Phong thuỷ</span>
+          <SunMoon className="w-4 h-4 opacity-80" />
+          <span className="text-[11px] font-semibold tracking-[0.3em] text-[var(--primary)]/80">LỊCH PHONG THUỶ</span>
         </Link>
         <div className="flex items-center gap-2">
           <ThemeSwitcher />
@@ -189,7 +190,7 @@ export default function XemNgayPage() {
             {dayInfo.hourGood.length > 0 && (
               <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-3 mb-3 card-glow">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[var(--primary)]/60 text-xs">🕐</span>
+                  <Clock className="w-3.5 h-3.5 text-[var(--primary)]/60" />
                   <span className="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">Giờ hoàng đạo</span>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
@@ -205,7 +206,7 @@ export default function XemNgayPage() {
             {/* Nhận xét */}
             <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-3 mb-3 card-glow">
               <div className="flex items-center gap-2 mb-2.5">
-                <span className="text-[var(--primary)]/60 text-xs">📋</span>
+                <ClipboardList className="w-3.5 h-3.5 text-[var(--primary)]/60" />
                 <span className="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">Nhận xét</span>
               </div>
               <div className="space-y-1.5">
