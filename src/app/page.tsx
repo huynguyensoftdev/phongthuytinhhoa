@@ -110,7 +110,7 @@ export default function Home() {
               ))}
             </div>
             <div className="text-center text-xs text-[var(--text-muted)]">
-              {dayInfo.solarTerm && <span>Tiết {vnText(dayInfo.solarTerm)} · </span>}
+              {dayInfo.solarTerm && <span>Tiết {vnText(dayInfo.solarTerm)} ({vnText(result.diaLoi.kyMon.escapeMode as string)} {result.diaLoi.kyMon.juShu as string}) · </span>}
               Trực {vnText(dayInfo.fitness.name)} · <span className={ELEMENT_COLOR[getDayElement(dayInfo.canChi.day)]}>Ngũ hành {getDayElement(dayInfo.canChi.day)}</span>
             </div>
           </div>
