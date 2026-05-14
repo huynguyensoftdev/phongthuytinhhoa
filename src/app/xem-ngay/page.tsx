@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { evaluateTamThuc, type TamThucResult } from '@/lib/tamthuc'
 import { getDayInfo } from '@/lib/lich'
-import { vnText, getDayElement } from '@/lib/vn'
+import { vnText, getDayElement, DOOR_VN, PALACE_VN, PALACE_DOOR_HOME, computeBatMonDaiDon } from '@/lib/vn'
 
 const ELEMENT_COLOR: Record<string, string> = {
   'Mộc': 'text-emerald-600', 'Hỏa': 'text-red-600',
@@ -223,24 +223,39 @@ export default function XemNgayPage() {
               </div>
             </div>
 
-            {/* Kỳ Môn */}
+            {/* Bát Môn Đại Độn */}
             <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] px-4 py-3 mb-4 card-glow">
               <div className="flex items-center gap-2 mb-2.5">
                 <span className="text-[var(--primary)]/60 text-xs">🚪</span>
-                <span className="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">Kỳ Môn — Bát Môn</span>
+                <span className="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">Bát Môn Đại Độn</span>
               </div>
-              <div className="grid grid-cols-8 gap-1">
-                {result.diaLoi.kyMon.doors && Object.entries(result.diaLoi.kyMon.doors as Record<string, string>)
-                  .sort(([a], [b]) => Number(a) - Number(b))
-                  .map(([palace, door]) => (
-                    <div key={palace} className="text-center py-1.5 rounded bg-[var(--card-sub)]">
-                      <div className={`text-xs font-bold ${door === '休' || door === '生' || door === '開' ? 'text-[var(--good)]' : door === '景' ? 'text-[var(--neutral)]' : 'text-[var(--bad)]'}`}>
-                        {door}
-                      </div>
-                      <div className="text-[8px] text-[var(--text-subtle)]">{palace}</div>
+              {(() => {
+                const hourBranch = dayInfo.canChi.hour[1] || '子'
+                const batMon = computeBatMonDaiDon(dayInfo.lunarMonth, dayInfo.lunarDay, hourBranch)
+                return (
+                  <>
+                    <div className="grid grid-cols-8 gap-1">
+                      {Object.entries(PALACE_DOOR_HOME)
+                        .sort(([a], [b]) => Number(a) - Number(b))
+                        .map(([palace, doorCn]) => {
+                          const isActive = batMon.activePalace === Number(palace)
+                          const dVn = DOOR_VN[doorCn] || doorCn
+                          return (
+                            <div key={palace} className={`text-center py-1.5 rounded ${isActive ? 'bg-[var(--primary)]/15 ring-1 ring-[var(--primary)]/40' : 'bg-[var(--card-sub)]'}`}>
+                              <div className={`text-xs font-bold ${isActive ? 'text-[var(--primary)]' : doorCn === '休' || doorCn === '生' || doorCn === '開' ? 'text-[var(--good)]' : doorCn === '景' ? 'text-[var(--neutral)]' : 'text-[var(--bad)]'}`}>
+                                {isActive ? `✦${dVn}` : dVn}
+                              </div>
+                              <div className="text-[8px] text-[var(--text-subtle)]">{PALACE_VN[palace] || palace}</div>
+                            </div>
+                          )
+                        })}
                     </div>
-                  ))}
-              </div>
+                    <div className="mt-1 text-[9px] text-[var(--text-subtle)] text-center">
+                      Cửa chủ: {DOOR_VN[batMon.activeDoorCn] || batMon.activeDoorVn} ({PALACE_VN[String(batMon.activePalace)]})
+                    </div>
+                  </>
+                )
+              })()}
             </div>
           </div>
         )}

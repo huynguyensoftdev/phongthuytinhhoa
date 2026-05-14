@@ -7,6 +7,7 @@ import {
   STEM_VN, BRANCH_VN, vnCanChi, vnText, GENERAL_VN,
   DOOR_VN, FLYING_STAR_VN, PALACE_VN,
   ANIMAL_VN, ZODIAC_VN, LIUREN_METHOD_VN, getDayElement,
+  computeBatMonDaiDon, PALACE_DOOR_HOME,
 } from '@/lib/vn'
 
 const CAN_COLORS: Record<string, string> = {
@@ -36,6 +37,10 @@ export default function Home() {
   const result = useMemo(() => evaluateTamThuc(date), [date])
   const dayInfo = useMemo(() => getDayInfo(date), [date])
   const monthDays = useMemo(() => getMonthDays(calYear, calMonth), [calYear, calMonth])
+  const batMon = useMemo(() => {
+    const hourBranch = dayInfo.canChi.hour[1] || '子'
+    return computeBatMonDaiDon(dayInfo.lunarMonth, dayInfo.lunarDay, hourBranch)
+  }, [dayInfo])
   const [py, pm, pd] = [date.getFullYear(), date.getMonth() + 1, date.getDate()]
 
   const goDay = (n: number) => setBaseDate(d => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n))
@@ -180,12 +185,12 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ===== KỲ MÔN + LỤC NHÂM ===== */}
+        {/* ===== BÁT MÔN ĐẠI ĐỘN + LỤC NHÂM ===== */}
         <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] px-3 py-2.5 card-glow">
           <div className="flex items-center gap-1.5 mb-2.5">
             <span className="text-[var(--primary)]/60 text-xs">🚪</span>
-            <span className="text-xs uppercase tracking-[0.15em] text-[var(--text-muted)]">Kỳ Môn Độn Giáp</span>
-            <span className="text-[10px] text-[var(--text-subtle)] ml-auto">{vnText(result.diaLoi.kyMon.escapeMode as string)} · Cục {result.diaLoi.kyMon.juShu as string}</span>
+            <span className="text-xs uppercase tracking-[0.15em] text-[var(--text-muted)]">Bát Môn Đại Độn</span>
+            <span className="text-[10px] text-[var(--text-subtle)] ml-auto">{dayInfo.solarTerm ? `Tiết ${vnText(dayInfo.solarTerm)}` : ''} · {vnText(result.diaLoi.kyMon.escapeMode as string)} {result.diaLoi.kyMon.juShu as string}</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3 mb-3">
@@ -193,21 +198,24 @@ export default function Home() {
               <div className="text-[10px] text-[var(--text-muted)] mb-1.5 font-medium">Bát môn — Cửu cung</div>
               <div className="grid grid-cols-3 gap-0.5 max-w-[180px]">
                 {[4, 9, 2, 3, 5, 7, 8, 1, 6].map(palace => {
-                  const doors = result.diaLoi.kyMon.doors as Record<string, string> | undefined
-                  const door = doors?.[String(palace)] || ''
-                  const dVn = DOOR_VN[door] || door
-                  const isDoorGood = door === '休' || door === '生' || door === '開'
-                  const isDoorBad = door === '杜' || door === '傷' || door === '死' || door === '驚'
-                  const isEmpty = !door
+                  const doorCn = PALACE_DOOR_HOME[palace] || ''
+                  const dVn = DOOR_VN[doorCn] || doorCn
+                  const isActive = batMon.activePalace === palace
+                  const isDoorGood = doorCn === '休' || doorCn === '生' || doorCn === '開'
+                  const isDoorBad = doorCn === '杜' || doorCn === '傷' || doorCn === '死' || doorCn === '驚'
+                  const isEmpty = !doorCn
                   return (
-                    <div key={palace} className={`text-center py-2 rounded transition-colors ${isEmpty ? 'bg-[var(--card-sub)]' : isDoorGood ? 'bg-[var(--good-bg)]' : isDoorBad ? 'bg-[var(--bad-bg)]' : 'bg-[var(--card-sub)]'}`}>
-                      <div className={`text-sm font-bold ${isEmpty ? 'text-[var(--text-subtle)]' : isDoorGood ? 'text-[var(--good)]' : isDoorBad ? 'text-[var(--bad)]' : 'text-[var(--text-muted)]'}`}>
-                        {isEmpty ? '—' : dVn}
+                    <div key={palace} className={`text-center py-2 rounded transition-colors relative ${isEmpty ? 'bg-[var(--card-sub)]' : isActive ? 'bg-[var(--primary)]/15 ring-2 ring-[var(--primary)]/40' : isDoorGood ? 'bg-[var(--good-bg)]' : isDoorBad ? 'bg-[var(--bad-bg)]' : 'bg-[var(--card-sub)]'}`}>
+                      <div className={`text-sm font-bold ${isEmpty ? 'text-[var(--text-subtle)]' : isActive ? 'text-[var(--primary)]' : isDoorGood ? 'text-[var(--good)]' : isDoorBad ? 'text-[var(--bad)]' : 'text-[var(--text-muted)]'}`}>
+                        {isEmpty ? '—' : isActive ? `✦${dVn}` : dVn}
                       </div>
                       <div className="text-[8px] text-[var(--text-subtle)]">{PALACE_VN[String(palace)] || palace}</div>
                     </div>
                   )
                 })}
+              </div>
+              <div className="mt-1 text-[9px] text-[var(--text-subtle)] text-center">
+                Cửa chủ: {DOOR_VN[batMon.activeDoorCn] || batMon.activeDoorVn} ({PALACE_VN[String(batMon.activePalace)]})
               </div>
             </div>
             <div>

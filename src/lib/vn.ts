@@ -107,6 +107,46 @@ export function getDayElement(canChiDay: string): string {
   return STEM_ELEMENT[stem] || ''
 }
 
+// ===== BÁT MÔN ĐẠI ĐỘN (Gia Cát Lượng) =====
+const BATMON_CYCLE = ['Hưu', 'Sinh', 'Thương', 'Đỗ', 'Cảnh', 'Tử', 'Kinh', 'Khai']
+const REVERSE_DOOR: Record<string, string> = {
+  '休': 'Hưu', '生': 'Sinh', '傷': 'Thương', '杜': 'Đỗ',
+  '景': 'Cảnh', '死': 'Tử', '驚': 'Kinh', '開': 'Khai',
+}
+const MONTH_DOOR_IDX: Record<number, number> = {
+  1: 1, 2: 2, 3: 2, 4: 3, 5: 4, 6: 4,
+  7: 5, 8: 6, 9: 6, 10: 7, 11: 0, 12: 0,
+}
+const BRANCH_INDEX: Record<string, number> = {
+  '子': 0, '丑': 1, '寅': 2, '卯': 3, '辰': 4, '巳': 5,
+  '午': 6, '未': 7, '申': 8, '酉': 9, '戌': 10, '亥': 11,
+}
+/** Fixed home positions of 8 doors on 九宫 grid */
+export const DOOR_HOME_PALACE: Record<string, number> = {
+  '休': 1, '生': 8, '傷': 3, '杜': 4,
+  '景': 9, '死': 2, '驚': 7, '開': 6,
+}
+export const PALACE_DOOR_HOME: Record<number, string> = {
+  1: '休', 8: '生', 3: '傷', 4: '杜',
+  9: '景', 2: '死', 7: '驚', 6: '開',
+}
+
+export function computeBatMonDaiDon(
+  lunarMonth: number,
+  lunarDay: number,
+  hourBranch: string
+): { activeDoorCn: string; activeDoorVn: string; activePalace: number } {
+  const mIdx = MONTH_DOOR_IDX[lunarMonth] ?? 1
+  const hIdx = BRANCH_INDEX[hourBranch] ?? 0
+  const totalSteps = mIdx + (lunarDay - 1) + hIdx
+  const activeIdx = ((totalSteps % 8) + 8) % 8
+  const activeVn = BATMON_CYCLE[activeIdx]
+  // Find the Chinese door name that maps to this VN name
+  const activeCn = Object.entries(REVERSE_DOOR).find(([, v]) => v === activeVn)?.[0] || activeVn
+  const activePalace = DOOR_HOME_PALACE[activeCn] || 1
+  return { activeDoorCn: activeCn, activeDoorVn: activeVn, activePalace }
+}
+
 // ===== NGŨ HÀNH =====
 export const ELEMENT_VN: Record<string, string> = {
   'Wood': 'Mộc', 'Fire': 'Hỏa', 'Earth': 'Thổ',
